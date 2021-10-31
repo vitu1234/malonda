@@ -181,8 +181,8 @@ public class SplashscreenActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
-//                    startActivity(new Intent(getApplicationContext(), BuyerDashboardActivity.class));
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    startActivity(new Intent(getApplicationContext(), BuyerDashboardActivity.class));
+//                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                 }
 

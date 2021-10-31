@@ -86,7 +86,7 @@ public class OnBoardingScreenActivity extends AppCompatActivity {
     public void skip(View view) {
 
 
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, BuyerDashboardActivity.class));
         finish();
     }
 

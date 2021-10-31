@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <item
+        android:icon="@drawable/cart_plus"
+        android:id="@+id/menu_login"
+        android:title="@string/action_sign_in_short" />
+    <item
+        android:icon="@drawable/cart_plus"
+        android:id="@+id/menu_nearby"
+        android:title="@string/nearby_txt" />
+
+    <item
+        android:icon="@drawable/trending_icon"
+        android:id="@+id/menu_trending"
+        android:title="@string/trending_txt" />
+    <item
+        android:icon="@drawable/suggest_24"
+        android:id="@+id/menu_suggestions"
+        android:title="@string/suggestions_txt" />
+
+    <item
+        android:icon="@drawable/info_icon"
+        android:id="@+id/menu_about"
+        android:title="@string/about_app" />
+
+
+<!--    <item-->
+<!--        android:icon="@drawable/logout_icon"-->
+<!--        android:id="@+id/menu_logout"-->
+<!--        android:title="@string/logout_txt" />-->
+<!--    <group android:checkableBehavior="single" >nearme, cheapest, farmer trending, google maps, suggest products-->
+
+<!--    </group>-->
+<!--    <group android:checkableBehavior="single">-->
+
+<!--    </group>-->
+<!--    <group android:checkableBehavior="single">-->
+<!--       -->
+<!--    </group>-->
+</menu>

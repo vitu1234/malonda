@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/whitesmoke2"
+    android:layout_margin="15dp"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/ripple_effect"
+    android:clickable="true"
+    android:elevation="10dp"
+    app:cardCornerRadius="5dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <ImageView
+            android:id="@+id/cardProdImage"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@id/top"
+            android:layout_centerInParent="true"
+            android:src="@drawable/image_icon" />
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/cardProdPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/poppins"
+                android:text="K200000"
+                android:textColor="@color/purple_700"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/horizontal_dots_24"
+                app:tint="@color/purple_700" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/cardProdName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@color/teal_200"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="7dp"
+            android:text="@string/developedby"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -1,25 +1,24 @@
 package com.example.malonda.supplier.fragments;
 
-import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.malonda.R;
-import com.example.malonda.common.LoginActivity;
-import com.example.malonda.common.SignupActivity;
+import com.example.malonda.buyer.activities.BuyerDashboardActivity;
 import com.example.malonda.room.AppDatabase;
 import com.example.malonda.storage.SharedPrefManager;
+import com.example.malonda.supplier.activities.AddEditBusinessInfoActivity;
 import com.example.malonda.supplier.activities.MyProductsActivity;
 
 /**
@@ -31,6 +30,7 @@ public class SupplierDashboardFragment extends Fragment {
     TextView textViewProductsCount, textViewOrdersCount, textViewSalesCount;
     SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout relativeLayoutMyProducts;
+    ImageView imageViewLogout;
 
     AppDatabase room_db;
     SharedPrefManager sharedPrefManager;
@@ -72,6 +72,7 @@ public class SupplierDashboardFragment extends Fragment {
         textViewSalesCount = view.findViewById(R.id.dashSalesCount);
         swipeRefreshLayout = view.findViewById(R.id.supplierDashSwiperefresh);
         relativeLayoutMyProducts = view.findViewById(R.id.relativeLayoutMyProducts);
+        imageViewLogout = view.findViewById(R.id.dashLogout);
 
         room_db = AppDatabase.getDbInstance(getContext());
         sharedPrefManager = SharedPrefManager.getInstance(getContext());
@@ -79,8 +80,39 @@ public class SupplierDashboardFragment extends Fragment {
 
         setViewValues();
         setOnclickListeners();
+        checkBusinessInfo();
 
         return view;
+    }
+
+    private void checkBusinessInfo() {
+        if (room_db.businessInfoDao().getSingleBusinessInfoCountByBusinessInfoID(user_id) == 0) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+            builder1.setMessage(R.string.pontetial_customers_txt);
+            builder1.setTitle(R.string.warning_txt);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    R.string.add_txt,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            startActivity(new Intent(getContext(), AddEditBusinessInfoActivity.class));
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    R.string.close_txt,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alertDialog = builder1.create();
+            alertDialog.show();
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(this.getResources().getColor(R.color.red));
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(this.getResources().getColor(R.color.purple_700));
+        }
     }
 
     private void setOnclickListeners() {
@@ -88,13 +120,19 @@ public class SupplierDashboardFragment extends Fragment {
             Intent intent = new Intent(getActivity(), MyProductsActivity.class);
             //add shared animation
 
-                startActivity(intent);
+            startActivity(intent);
 
         });
     }
 
     private void setViewValues() {
         int user_products = room_db.productDao().getUserProductCount(user_id);
-        textViewProductsCount.setText(user_products+" Products");
+        textViewProductsCount.setText(user_products + " Products");
+
+        imageViewLogout.setOnClickListener(view -> {
+            sharedPrefManager.logoutUser();
+            startActivity(new Intent(this.getContext(), BuyerDashboardActivity.class));
+            getActivity().finish();
+        });
     }
 }

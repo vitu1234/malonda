@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitesmoke"
+    android:background="@color/whitesmoke2"
     android:orientation="vertical"
     android:transitionName="to_add_productTransition"
     tools:context=".supplier.activities.AddEditProductActivity">
