@@ -17,6 +17,9 @@ public interface BusinessInfoDao {
     @Query("SELECT * FROM business_info WHERE business_id = :id")
     BusinessInfo findByBusinessInfoId(int id);
 
+    @Query("SELECT * FROM business_info WHERE user_id = :id")
+    BusinessInfo findByBusinessByUserId(int id);
+
     //    @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Insert()
     void insertBusinessInfo(BusinessInfo business_info);
@@ -38,8 +41,8 @@ public interface BusinessInfoDao {
     @Query("SELECT * FROM business_info WHERE business_id = :id")
     int getSingleBusinessInfoCount(int id);
 
-    @Query("SELECT * FROM business_info WHERE user_id = :user_id")
-    int getSingleBusinessInfoCountByBusinessInfoID(String user_id);
+    @Query("SELECT COUNT(*) FROM business_info WHERE user_id = :user_id")
+    int getSingleBusinessInfoCountByBusinessInfoID(int user_id);
 
     //count all car
     @Query("SELECT COUNT(*) FROM business_info ")

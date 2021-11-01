@@ -4,7 +4,7 @@
     android:id="@+id/supplierDashSwiperefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitesmoke"
+    android:background="@color/whitesmoke2"
     android:scrollbars="none"
     tools:context=".supplier.fragments.SupplierDashboardFragment">
 
@@ -26,6 +26,9 @@
                 android:padding="16dp">
 
                 <ImageView
+                    android:clickable="true"
+                    android:background="@drawable/ripple_effect"
+                    android:id="@+id/dashLogout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

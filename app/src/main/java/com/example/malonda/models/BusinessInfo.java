@@ -15,10 +15,19 @@ public class BusinessInfo {
     int user_id;
 
     @ColumnInfo(name = "business_name")
-    String business_name;  @ColumnInfo(name = "business_address")
+    String business_name;
+
+    @ColumnInfo(name = "business_phone")
+    String business_phone;
+
+    @ColumnInfo(name = "business_address")
     String business_address;
-    @ColumnInfo(name = "status")
-    int status;
+
+    @ColumnInfo(name = "longtude")
+    String longtude;
+
+    @ColumnInfo(name = "latitude")
+    String latitude;
 
     @ColumnInfo(name = "date_created")
     String date_created;
@@ -29,12 +38,14 @@ public class BusinessInfo {
     public BusinessInfo() {
     }
 
-    public BusinessInfo(int business_id, int user_id, String business_name, String business_address, int status, String date_created, String date_updated) {
+    public BusinessInfo(int business_id, int user_id, String business_name, String business_phone, String business_address, String longtude, String latitude, String date_created, String date_updated) {
         this.business_id = business_id;
         this.user_id = user_id;
         this.business_name = business_name;
+        this.business_phone = business_phone;
         this.business_address = business_address;
-        this.status = status;
+        this.longtude = longtude;
+        this.latitude = latitude;
         this.date_created = date_created;
         this.date_updated = date_updated;
     }
@@ -47,20 +58,20 @@ public class BusinessInfo {
         this.room_business_info_id = room_business_info_id;
     }
 
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
     public int getBusiness_id() {
         return business_id;
     }
 
     public void setBusiness_id(int business_id) {
         this.business_id = business_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getBusiness_name() {
@@ -71,6 +82,14 @@ public class BusinessInfo {
         this.business_name = business_name;
     }
 
+    public String getBusiness_phone() {
+        return business_phone;
+    }
+
+    public void setBusiness_phone(String business_phone) {
+        this.business_phone = business_phone;
+    }
+
     public String getBusiness_address() {
         return business_address;
     }
@@ -79,12 +98,20 @@ public class BusinessInfo {
         this.business_address = business_address;
     }
 
-    public int getStatus() {
-        return status;
+    public String getLongtude() {
+        return longtude;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setLongtude(String longtude) {
+        this.longtude = longtude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
     public String getDate_created() {

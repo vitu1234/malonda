@@ -62,18 +62,16 @@ public interface Api {
 
     );
 
-    //add sale
+    //add business info
     @FormUrlEncoded
-    @POST("add_sale")
-    Call<AllDataResponse> add_sale(
-            @Field("product_id[]") List<Integer> product_id,
-            @Field("qty[]") List<Integer> qty,
-            @Field("total") double total,
-            @Field("paid_amount") double paid_amount,
-            @Field("change") double change,
-            @Field("discount") double discount,
-            @Field("tax") double tax
-
+    @POST("add_business_info")
+    Call<AllDataResponse> add_business_info(
+            @Field("user_id") int user_id,
+            @Field("business_name") String business_name,
+            @Field("business_phone") String business_phone,
+            @Field("business_address") String business_address,
+            @Field("longtude") String longtude,
+            @Field("latitude") String latitude
     );
 
 
@@ -118,14 +116,19 @@ public interface Api {
 
     );
 
-    //update inventory qty to server
+    //update business info
     @FormUrlEncoded
-    @PUT("update_inventory")
-    Call<AllDataResponse> update_inventory(
-            @Field("product_id[]") List<Integer> product_id,
-            @Field("qty[]") List<Integer> qty
-
+    @POST("update_business_info")
+    Call<AllDataResponse> update_business_info(
+            @Field("user_id") int user_id,
+            @Field("business_id") int business_id,
+            @Field("business_name") String business_name,
+            @Field("business_phone") String business_phone,
+            @Field("business_address") String business_address,
+            @Field("longtude") String longtude,
+            @Field("latitude") String latitude
     );
+
 
 
     //change product picture
@@ -143,5 +146,11 @@ public interface Api {
     @DELETE("delete_product/{product_id}")
     Call<AllDataResponse> deleteProduct(
             @Path("product_id") int product_id
+    );
+
+    //delete supplier
+    @DELETE("delete_business/{business_id}")
+    Call<AllDataResponse> deleteBusiness(
+            @Path("business_id") int business_id
     );
 }
