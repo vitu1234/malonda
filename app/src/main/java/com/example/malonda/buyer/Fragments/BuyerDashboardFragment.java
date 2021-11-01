@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.malonda.R;
 import com.example.malonda.adapters.TerminalAdapter;
+import com.example.malonda.buyer.activities.NearByBusinessesActivity;
 import com.example.malonda.buyer.activities.SalesCheckoutActivity;
 import com.example.malonda.common.LoginActivity;
 import com.example.malonda.models.POS;
@@ -147,7 +148,8 @@ public class BuyerDashboardFragment extends Fragment {
                 if (menuItem.getItemId() == R.id.menu_login) {
                     startActivity(new Intent(view.getContext(), LoginActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_nearby) {
-
+                    startActivity(new Intent(getContext(), NearByBusinessesActivity.class));
+                    getActivity().overridePendingTransition(0,0);
                 } else if (menuItem.getItemId() == R.id.menu_trending) {
 
                 } else if (menuItem.getItemId() == R.id.menu_suggestions) {

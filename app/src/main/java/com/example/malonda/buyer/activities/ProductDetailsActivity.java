@@ -39,11 +39,7 @@ import com.squareup.picasso.Picasso;
 public class ProductDetailsActivity extends AppCompatActivity {
     int product_id = -1, user_id = -1;
     String longtude = "", latitude = "", me_longtude = "",me_latitude = "";
-    private GoogleMap mMap;
-    private MarkerOptions place1, place2;
-    private Polyline currentPolyline;
     private GpsTracker gpsTracker;
-    MapFragment mapFragment;
 
 
     AppDatabase room_db;
@@ -66,17 +62,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
         textViewBusPhone = findViewById(R.id.prodDetails_prodBusPhone);
         textViewBusAddress = findViewById(R.id.prodDetails_prodAddress);
         relativeLayoutBusDetails = findViewById(R.id.busDetailsLayout);
-        mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.mapFrag);
+
 
 
         Intent intent = this.getIntent();
         room_db = AppDatabase.getDbInstance(this);
+        getLocationPermissions();
         gpsTracker = new GpsTracker(this);
 
         product_id = intent.getIntExtra("product_id", -1);
 
-        getLocationPermissions();
 
         setViews();
     }

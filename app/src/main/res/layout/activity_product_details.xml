@@ -215,14 +215,6 @@
                         android:text="@string/sample_desc"
                         android:textAlignment="center" />
 
-                    <FrameLayout
-                        android:id="@+id/mapFrag"
-                        android:name="com.google.android.gms.maps.MapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_below="@id/prodDetails_prodAddress"
-                        android:layout_marginTop="20dp"
-                        android:visibility="gone" />
                 </RelativeLayout>
 
             </LinearLayout>
