@@ -55,12 +55,12 @@ public class TerminalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final int SHOW_MENU = 1;
     private final int HIDE_MENU = 2;
 
-    BuyerDashboardFragment posTerminalFragment;
+//    BuyerDashboardFragment posTerminalFragment;
 
-    public TerminalAdapter(BuyerDashboardFragment posTerminalFragment, Context context, List<Product> productList) {
-        this.context = posTerminalFragment.getContext();
+    public TerminalAdapter( Context context, List<Product> productList) {
+        this.context = context;
         this.productList = productList;
-        this.posTerminalFragment = posTerminalFragment;
+//        this.posTerminalFragment = posTerminalFragment;
     }
 
     @NonNull
@@ -236,8 +236,8 @@ public class TerminalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 total += posList.get(i).getTotal();
             }
 
-            posTerminalFragment.textViewTotalItems.setText("Items: K" + total);
-            posTerminalFragment.buttonDiscard.setVisibility(View.VISIBLE);
+//            posTerminalFragment.textViewTotalItems.setText("Items: K" + total);
+//            posTerminalFragment.buttonDiscard.setVisibility(View.VISIBLE);
             alertDialog.dismiss();
 
         });

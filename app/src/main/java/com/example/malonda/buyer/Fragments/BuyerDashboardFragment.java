@@ -216,7 +216,7 @@ public class BuyerDashboardFragment extends Fragment {
 
     private void setRecyclerView() {
         if (productList.size() > 0) {
-            adapter = new TerminalAdapter(this, this.getContext(), productList);
+            adapter = new TerminalAdapter( this.getContext(), productList);
 
             // setting grid layout manager to implement grid view.
             // in this method '2' represents number of columns to be displayed in grid view.

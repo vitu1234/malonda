@@ -55,13 +55,21 @@ public class BusinessesNearbyAdapter extends RecyclerView.Adapter<RecyclerView.V
         room_db = AppDatabase.getDbInstance(context);
         BusinessLocationDistance businessLocationDistance = businessLocationDistanceList.get(position);
         BusinessInfo entity = room_db.businessInfoDao().findByBusinessInfoId(businessLocationDistance.getBusiness_id());
-
+        int products_bus = room_db.productDao().getUserProductCount(entity.getUser_id());
 
         if (holder instanceof MyViewHolder) {
             ((MyViewHolder) holder).textViewName.setText(entity.getBusiness_name());
             ((MyViewHolder) holder).textViewPhone.setText("" + entity.getBusiness_phone());
             ((MyViewHolder) holder).textViewAddress.setText("" + entity.getBusiness_address());
-            ((MyViewHolder) holder).textViewKilometres.setText("" +(Math.round( businessLocationDistance.getKm_from_me() * 100.0) / 100.0) + "KM away");
+            if (products_bus > 1) {
+                ((MyViewHolder) holder).textViewProducts.setText("" + products_bus + " Products");
+            } else if (products_bus == 1) {
+                ((MyViewHolder) holder).textViewProducts.setText("" + products_bus + " Product");
+            } else {
+                ((MyViewHolder) holder).textViewProducts.setText("" + products_bus + " Products");
+            }
+
+            ((MyViewHolder) holder).textViewKilometres.setText("" + (Math.round(businessLocationDistance.getKm_from_me() * 100.0) / 100.0) + "KM away");
 
             ((MyViewHolder) holder).container.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,7 +100,7 @@ public class BusinessesNearbyAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
-        TextView textViewName, textViewPhone, textViewAddress, textViewKilometres;
+        TextView textViewName, textViewPhone, textViewAddress, textViewKilometres, textViewProducts;
         FrameLayout container;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -103,6 +111,7 @@ public class BusinessesNearbyAdapter extends RecyclerView.Adapter<RecyclerView.V
             textViewPhone = itemView.findViewById(R.id.busPhone);
             textViewAddress = itemView.findViewById(R.id.busAddress);
             textViewKilometres = itemView.findViewById(R.id.busDistance);
+            textViewProducts = itemView.findViewById(R.id.busProducts);
 
             itemView.setOnLongClickListener(this);
 

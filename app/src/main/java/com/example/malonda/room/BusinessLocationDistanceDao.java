@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface BusinessLocationDistanceDao {
-    @Query("SELECT *FROM business_location_distance ORDER BY km_from_me DESC LIMIT 30")
+    @Query("SELECT *FROM business_location_distance ORDER BY km_from_me ASC LIMIT 30")
     List<BusinessLocationDistance> getAllBusinessInfoOrderByDistance();
 
     @Query("SELECT * FROM business_location_distance WHERE business_id = :id")

@@ -40,6 +40,7 @@
                 />
 
             <LinearLayout
+                android:id="@+id/lins"
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,7 +73,16 @@
                     app:tint="@color/purple_500" />
 
             </LinearLayout>
-
+            <TextView
+                android:layout_below="@+id/lins"
+                android:textColor="@color/purple_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/busProducts"
+                android:text="10KM away"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                />
         </RelativeLayout>
 
 </FrameLayout>

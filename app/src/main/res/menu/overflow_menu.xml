@@ -30,7 +30,7 @@
 <!--        android:icon="@drawable/logout_icon"-->
 <!--        android:id="@+id/menu_logout"-->
 <!--        android:title="@string/logout_txt" />-->
-<!--    <group android:checkableBehavior="single" >nearme, cheapest, farmer trending, google maps, suggest products-->
+<!--    <group android:checkableBehavior="single" >nearme, sort category cheapest, farmer trending, google maps, suggest products-->
 
 <!--    </group>-->
 <!--    <group android:checkableBehavior="single">-->

@@ -15,8 +15,14 @@ public interface ProductDao {
     @Query("SELECT *FROM product")
     List<Product> getAllProducts();
 
+    @Query("SELECT *FROM product WHERE user_id =:user_id  ")
+    List<Product> getAllUserProducts(int user_id);
+
     @Query("SELECT *FROM product WHERE qty >0 ORDER BY product_name ASC")
     List<Product> getAllProductsAvailable();
+
+    @Query("SELECT *FROM product WHERE qty >0 AND user_id =:user_id ORDER BY product_name ASC")
+    List<Product> getAllUserProductsAvailable(int user_id);
 
     @Query("SELECT * FROM product WHERE product_id = :id")
     Product findByProductId(int id);

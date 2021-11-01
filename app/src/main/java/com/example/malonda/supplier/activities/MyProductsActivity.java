@@ -24,6 +24,7 @@ import com.example.malonda.R;
 import com.example.malonda.adapters.ProductsAdapter;
 import com.example.malonda.models.Product;
 import com.example.malonda.room.AppDatabase;
+import com.example.malonda.storage.SharedPrefManager;
 import com.example.malonda.utils.BetterActivityResult;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -35,7 +36,9 @@ public class MyProductsActivity extends AppCompatActivity {
     TextView textViewProductsWarning;
     final Context context = this;
     AppDatabase room_db;
-    List<Product> productList;
+    List<Product> productList = new ArrayList<>();
+
+    int user_id =-1;
 
     //properties
     private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
@@ -51,6 +54,7 @@ public class MyProductsActivity extends AppCompatActivity {
         room_db = AppDatabase.getDbInstance(this);
         textViewProductsWarning = findViewById(R.id.productWarning);
         textInputLayoutSearch = findViewById(R.id.searchProductText);
+        user_id = SharedPrefManager.getInstance(this).getUser().getUser_id();
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setProductsRecycler();
@@ -82,8 +86,8 @@ public class MyProductsActivity extends AppCompatActivity {
     }
 
     private void setProductsRecycler() {
-        if (room_db.productDao().countAllProducts() > 0) {
-            productList = room_db.productDao().getAllProducts();
+        if (room_db.productDao().getUserProductCount(user_id) > 0) {
+            productList = room_db.productDao().getAllUserProducts(user_id);
 
             adapter = new ProductsAdapter(this, productList);
 
@@ -150,7 +154,7 @@ public class MyProductsActivity extends AppCompatActivity {
     //filtering the list
     private void filter(String text) {
         List<Product> filteredList = new ArrayList<>();
-        for (Product product : room_db.productDao().getAllProducts()) {
+        for (Product product : room_db.productDao().getAllUserProducts(user_id)) {
             if (product.getProduct_name().toLowerCase().contains(text.toLowerCase()) || product.getDescription().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(product);
                 textViewProductsWarning.setVisibility(View.INVISIBLE);
@@ -167,8 +171,11 @@ public class MyProductsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 //        Toast.makeText(context, "resumesd", Toast.LENGTH_SHORT).show();
-        productList.clear();
-        productList = room_db.productDao().getAllProducts();
-        adapter.filterList(productList);
+        if (adapter != null){
+            productList.clear();
+            productList = room_db.productDao().getAllUserProducts(user_id);
+            adapter.filterList(productList);
+        }
+
     }
 }
