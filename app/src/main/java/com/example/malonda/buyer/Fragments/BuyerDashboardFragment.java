@@ -177,6 +177,7 @@ public class BuyerDashboardFragment extends Fragment implements AdapterView.OnIt
                                     Intent intent = new Intent(getContext(), CategoryProductsActivity.class);
                                     intent.putExtra("category_id",show_category);
                                     intent.putExtra("bus_user_id",-1);
+                                    startActivity(intent);
                                 }
 
                             }

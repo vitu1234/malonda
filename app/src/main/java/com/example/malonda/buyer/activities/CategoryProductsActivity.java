@@ -7,10 +7,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -19,7 +17,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.malonda.R;
-import com.example.malonda.adapters.CustomSpinnerAdapter;
 import com.example.malonda.adapters.TerminalAdapter;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.Product;
@@ -40,7 +37,7 @@ public class CategoryProductsActivity extends AppCompatActivity {
     public TextView textViewWarning, textViewBusName;
     TextInputLayout textInputLayoutSearch;
     MyProgressDialog progressDialog;
-    ImageView imageViewBarcode, sortListImageView, imageViewLogout;
+    ImageView imageViewBarcode, sortListImageView;
     AlertDialog alertDialog;
     int business_id = -1, bus_user_id;
     int show_category = -1;
@@ -56,7 +53,6 @@ public class CategoryProductsActivity extends AppCompatActivity {
         textViewWarning = findViewById(R.id.posWarning);
         textInputLayoutSearch = findViewById(R.id.posSearchProduct);
         sortListImageView = findViewById(R.id.sortListImageview);
-        imageViewLogout = findViewById(R.id.buyerMenu);
         textViewBusName = findViewById(R.id.businessName);
 
 
@@ -67,12 +63,11 @@ public class CategoryProductsActivity extends AppCompatActivity {
         if (intent.getIntExtra("bus_user_id", -1) != -1) {
             bus_user_id = intent.getIntExtra("bus_user_id", -1);
         } else {
-            productList = roomdb.productDao().getAllUserProductsCategoryId(show_category);
+            productList = roomdb.productDao().getAllProductsAvailableCAT(show_category);
         }
 
         Category category = roomdb.categoryDao().findByCategoryId(show_category);
         textViewBusName.setText("In " + category.getCategory_name() + " ");
-
 
 
         progressDialog = new MyProgressDialog(this);
@@ -102,9 +97,7 @@ public class CategoryProductsActivity extends AppCompatActivity {
 
             }
         });
-        imageViewLogout.setOnClickListener(view -> {
-            onBackPressed();
-        });
+
 
 
 //        sortListImageView.setOnClickListener(v -> sortList());
@@ -236,21 +229,50 @@ public class CategoryProductsActivity extends AppCompatActivity {
         List<Product> filteredList = new ArrayList<>();
         Log.e("dsfafa", sort_qry);
         if (sort_qry.equals("price_asc")) {
-            for (Product product : roomdb.productDao().getAllProductsAvailablePriceAsc(bus_user_id)) {
-                filteredList.add(product);
+
+            if (bus_user_id != -1){
+                for (Product product : roomdb.productDao().getAllProductsAvailablePriceAscCAT(show_category,bus_user_id)) {
+                    filteredList.add(product);
+                }
+            }else{
+                for (Product product : roomdb.productDao().getAllProductsAvailablePriceAscCAT(show_category)) {
+                    filteredList.add(product);
+                }
             }
+
+
+
         } else if (sort_qry.equals("price_desc")) {
-            for (Product product : roomdb.productDao().getAllProductsAvailablePriceDesc(bus_user_id)) {
-                filteredList.add(product);
+            if (bus_user_id != -1){
+                for (Product product : roomdb.productDao().getAllProductsAvailablePriceDescCAT(show_category,bus_user_id)) {
+                    filteredList.add(product);
+                }
+            }else {
+                for (Product product : roomdb.productDao().getAllProductsAvailablePriceDescCAT(show_category)) {
+                    filteredList.add(product);
+                }
             }
+
         } else if (sort_qry.equals("az_sort")) {
-            for (Product product : roomdb.productDao().getAllUserProductsAvailable(bus_user_id)) {
-                filteredList.add(product);
-            }
+           if (bus_user_id != -1){
+               for (Product product : roomdb.productDao().getAllUserProductsAvailableNameAscCAT(show_category, bus_user_id)) {
+                   filteredList.add(product);
+               }
+           }else{
+               for (Product product : roomdb.productDao().getAllUserProductsAvailableNameAscCAT(show_category)) {
+                   filteredList.add(product);
+               }
+           }
         } else if (sort_qry.equals("za_sort")) {
-            for (Product product : roomdb.productDao().getAllProductsAvailableNameDesc(bus_user_id)) {
-                filteredList.add(product);
-            }
+           if (bus_user_id !=-1){
+               for (Product product : roomdb.productDao().getAllProductsAvailableNameDescCAT(show_category,bus_user_id)) {
+                   filteredList.add(product);
+               }
+           }else{
+               for (Product product : roomdb.productDao().getAllProductsAvailableNameDescCAT(show_category)) {
+                   filteredList.add(product);
+               }
+           }
         }
 
         if (adapter != null) {
