@@ -118,27 +118,27 @@ public class BusinessProductsActivity extends AppCompatActivity {
 
     private void setSpinner() {
         String[] category_names = new String[categoryList.size()];
-        int[] category_ids = new int[categoryList.size()];
-        for (int i = 0; i < categoryList.size(); i++) {
-            category_ids[i] = categoryList.get(i).getCategory_id();
-            category_names[i] = categoryList.get(i).getCategory_name();
+        int[] category_ids = new  int[categoryList.size()];
+        for (int i =0;i<categoryList.size();i++){
+            category_ids[i]=categoryList.get(i).getCategory_id();
+            category_names[i]=categoryList.get(i).getCategory_name();
         }
 
         LayoutInflater li = LayoutInflater.from(getApplicationContext());
         View promptsView = li.inflate(R.layout.prompt_spinner_layout, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                getApplicationContext());
+                this);
 
         // set prompts.xml to alertdialog builder
         alertDialogBuilder.setView(promptsView);
         Spinner spinner = promptsView.findViewById(R.id.categorySpinner);
-        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), category_ids, category_names);
+        CustomSpinnerAdapter customAdapter=new CustomSpinnerAdapter(getApplicationContext(),category_ids,category_names);
         spinner.setAdapter(customAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("e", category_names[i] + " ID: " + category_ids[i]);
+                Log.e("e",category_names[i]+" ID: "+category_ids[i]);
                 show_category = category_ids[i];
             }
 
@@ -160,10 +160,11 @@ public class BusinessProductsActivity extends AppCompatActivity {
                                 alertDialog.dismiss();
                             } else {
 
-                                if (show_category != -1) {
+                                if (show_category != -1 ){
                                     Intent intent = new Intent(getApplicationContext(), CategoryProductsActivity.class);
-                                    intent.putExtra("category_id", show_category);
-                                    intent.putExtra("bus_user_id", bus_user_id);
+                                    intent.putExtra("category_id",show_category);
+                                    intent.putExtra("bus_user_id",bus_user_id);
+                                    startActivity(intent);
                                 }
 
                             }

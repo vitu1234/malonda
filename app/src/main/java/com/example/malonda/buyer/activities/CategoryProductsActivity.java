@@ -62,6 +62,7 @@ public class CategoryProductsActivity extends AppCompatActivity {
         show_category = intent.getIntExtra("category_id", -1);
         if (intent.getIntExtra("bus_user_id", -1) != -1) {
             bus_user_id = intent.getIntExtra("bus_user_id", -1);
+            productList = roomdb.productDao().getAllProductsAvailableCAT(show_category,bus_user_id);
         } else {
             productList = roomdb.productDao().getAllProductsAvailableCAT(show_category);
         }
