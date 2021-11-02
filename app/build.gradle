@@ -28,6 +28,7 @@ android {
     }
 
     repositories {
+        jcenter()
         maven { url "https://jitpack.io" }
     }
 }
@@ -63,13 +64,15 @@ dependencies {
     //custom toast zss
     implementation 'com.github.MrNtlu:Toastie:1.1.0'
     //image picker/camera/barcode
-    implementation 'com.sandrios.android:sandriosCamera:1.2.6'
+//    implementation 'com.sandrios.android:sandriosCamera:1.2.6'
+    implementation 'com.github.Drjacky:ImagePicker:2.1.14'
+
+    //inline activity result
+    implementation 'com.github.florent37:inline-activity-result-kotlin:1.0.4'
 
     // Optional: Circle Indicator (To fix the xml preview "Missing classes" error)
     implementation 'me.relex:circleindicator:2.1.4'
-
     implementation 'com.github.ImaginativeShohag:Why-Not-Image-Carousel:v1.0.0'
-
 
 
 }

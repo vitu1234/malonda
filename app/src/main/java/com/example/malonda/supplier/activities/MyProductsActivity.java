@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.appcompat.app.AppCompatActivity;
@@ -78,6 +79,7 @@ public class MyProductsActivity extends AppCompatActivity {
     }
 
     public void openAddProduct(View view) {
+//        Toast.makeText(context, "ssd", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, AddEditProductActivity.class));
     }
 

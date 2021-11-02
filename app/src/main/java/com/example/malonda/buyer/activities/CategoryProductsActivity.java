@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -22,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.malonda.R;
 import com.example.malonda.adapters.CustomSpinnerAdapter;
 import com.example.malonda.adapters.TerminalAdapter;
-import com.example.malonda.models.BusinessInfo;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.Product;
 import com.example.malonda.room.AppDatabase;
@@ -33,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BusinessProductsActivity extends AppCompatActivity {
+public class CategoryProductsActivity extends AppCompatActivity {
     RecyclerView recyclerViewPosTerminal;
     TerminalAdapter adapter;
     AppDatabase roomdb;
@@ -45,7 +43,6 @@ public class BusinessProductsActivity extends AppCompatActivity {
     ImageView imageViewBarcode, sortListImageView, imageViewLogout;
     AlertDialog alertDialog;
     int business_id = -1, bus_user_id;
-    TextView textViewCategories;
     int show_category = -1;
 
     double total = 0;
@@ -53,9 +50,7 @@ public class BusinessProductsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_products);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        setContentView(R.layout.activity_category_products);
 
         recyclerViewPosTerminal = findViewById(R.id.productsListPos);
         textViewWarning = findViewById(R.id.posWarning);
@@ -63,19 +58,21 @@ public class BusinessProductsActivity extends AppCompatActivity {
         sortListImageView = findViewById(R.id.sortListImageview);
         imageViewLogout = findViewById(R.id.buyerMenu);
         textViewBusName = findViewById(R.id.businessName);
-        textViewCategories = findViewById(R.id.showCategories1);
 
 
         roomdb = AppDatabase.getDbInstance(this);
 
         Intent intent = getIntent();
-        business_id = intent.getIntExtra("business_id", -1);
-        BusinessInfo businessInfo = roomdb.businessInfoDao().findByBusinessInfoId(business_id);
-        bus_user_id = businessInfo.getUser_id();
-        textViewBusName.setText(businessInfo.getBusiness_name() + " Products");
+        show_category = intent.getIntExtra("category_id", -1);
+        if (intent.getIntExtra("bus_user_id", -1) != -1) {
+            bus_user_id = intent.getIntExtra("bus_user_id", -1);
+        } else {
+            productList = roomdb.productDao().getAllUserProductsCategoryId(show_category);
+        }
 
-        productList = roomdb.productDao().getAllUserProductsAvailable(bus_user_id);
-        categoryList = roomdb.categoryDao().getAllCategorys();
+        Category category = roomdb.categoryDao().findByCategoryId(show_category);
+        textViewBusName.setText("In " + category.getCategory_name() + " ");
+
 
 
         progressDialog = new MyProgressDialog(this);
@@ -112,73 +109,6 @@ public class BusinessProductsActivity extends AppCompatActivity {
 
 //        sortListImageView.setOnClickListener(v -> sortList());
         sortListImageView.setOnClickListener(view -> showSortDialog());
-        textViewCategories.setOnClickListener(view -> setSpinner());
-
-    }
-
-    private void setSpinner() {
-        String[] category_names = new String[categoryList.size()];
-        int[] category_ids = new int[categoryList.size()];
-        for (int i = 0; i < categoryList.size(); i++) {
-            category_ids[i] = categoryList.get(i).getCategory_id();
-            category_names[i] = categoryList.get(i).getCategory_name();
-        }
-
-        LayoutInflater li = LayoutInflater.from(getApplicationContext());
-        View promptsView = li.inflate(R.layout.prompt_spinner_layout, null);
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                getApplicationContext());
-
-        // set prompts.xml to alertdialog builder
-        alertDialogBuilder.setView(promptsView);
-        Spinner spinner = promptsView.findViewById(R.id.categorySpinner);
-        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), category_ids, category_names);
-        spinner.setAdapter(customAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("e", category_names[i] + " ID: " + category_ids[i]);
-                show_category = category_ids[i];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        // set dialog message
-        alertDialogBuilder
-                .setCancelable(false)
-                .setPositiveButton("VIEW",
-                        (dialog, id) -> {
-                            //save here
-                            Boolean wantToCloseDialog = false;
-                            //Do stuff, possibly set wantToCloseDialog to true then...
-                            if (wantToCloseDialog) {
-                                alertDialog.dismiss();
-                            } else {
-
-                                if (show_category != -1) {
-                                    Intent intent = new Intent(getApplicationContext(), CategoryProductsActivity.class);
-                                    intent.putExtra("category_id", show_category);
-                                    intent.putExtra("bus_user_id", bus_user_id);
-                                }
-
-                            }
-                        })
-                .setNegativeButton("Close",
-                        (dialog, id) -> dialog.cancel());
-
-        // create alert dialog
-        alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
-        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.red));
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.purple_700));
-
 
     }
 
@@ -220,6 +150,7 @@ public class BusinessProductsActivity extends AppCompatActivity {
                 textViewWarning.setText("Change query for more filter results!");
             }
         }
+
         if (adapter != null) {
             adapter.filterList(filteredList);
         }
@@ -327,5 +258,7 @@ public class BusinessProductsActivity extends AppCompatActivity {
         }
     }
 
-
+    public void GoBakc(View view) {
+        onBackPressed();
+    }
 }

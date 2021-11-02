@@ -4,25 +4,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.malonda.R;
+import com.example.malonda.adapters.CustomSpinnerAdapter;
 import com.example.malonda.adapters.TerminalAdapter;
+import com.example.malonda.buyer.activities.CategoryProductsActivity;
 import com.example.malonda.buyer.activities.NearByBusinessesActivity;
 import com.example.malonda.buyer.activities.SalesCheckoutActivity;
 import com.example.malonda.common.LoginActivity;
+import com.example.malonda.models.Category;
 import com.example.malonda.models.POS;
 import com.example.malonda.models.Product;
 import com.example.malonda.room.AppDatabase;
@@ -37,11 +47,12 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class BuyerDashboardFragment extends Fragment {
+public class BuyerDashboardFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     RecyclerView recyclerViewPosTerminal;
     TerminalAdapter adapter;
     AppDatabase roomdb;
     List<Product> productList;
+    List<Category> categoryList;
     List<POS> posList;
     public TextView textViewWarning, textViewTotalItems;
     TextInputLayout textInputLayoutSearch;
@@ -50,8 +61,11 @@ public class BuyerDashboardFragment extends Fragment {
     public Button buttonDiscard;
     ImageCarousel carousel;
     List<CarouselItem> list = new ArrayList<>();
-
+    AlertDialog alertDialog;
     double total = 0;
+    TextView textViewCategories;
+
+    int show_category = -1;
 
     public BuyerDashboardFragment() {
         // Required empty public constructor
@@ -101,17 +115,84 @@ public class BuyerDashboardFragment extends Fragment {
         sortListImageView = view.findViewById(R.id.sortListImageview);
         imageViewLogout = view.findViewById(R.id.buyerMenu);
         carousel = view.findViewById(R.id.carousel);
+        textViewCategories = view.findViewById(R.id.showCategories);
+
 
         roomdb = AppDatabase.getDbInstance(this.getContext());
         productList = roomdb.productDao().getAllProductsAvailable();
+        categoryList = roomdb.categoryDao().getAllCategorys();
         progressDialog = new MyProgressDialog(this.getContext());
 
 
         setViews();
-
-
         setRecyclerView();
         return view;
+    }
+
+    private void setSpinner() {
+        String[] category_names = new String[categoryList.size()];
+        int[] category_ids = new  int[categoryList.size()];
+        for (int i =0;i<categoryList.size();i++){
+            category_ids[i]=categoryList.get(i).getCategory_id();
+            category_names[i]=categoryList.get(i).getCategory_name();
+        }
+
+        LayoutInflater li = LayoutInflater.from(getContext());
+        View promptsView = li.inflate(R.layout.prompt_spinner_layout, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getContext());
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+        Spinner spinner = promptsView.findViewById(R.id.categorySpinner);
+        CustomSpinnerAdapter customAdapter=new CustomSpinnerAdapter(getContext(),category_ids,category_names);
+        spinner.setAdapter(customAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e("e",category_names[i]+" ID: "+category_ids[i]);
+                show_category = category_ids[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("VIEW",
+                        (dialog, id) -> {
+                            //save here
+                            Boolean wantToCloseDialog = false;
+                            //Do stuff, possibly set wantToCloseDialog to true then...
+                            if (wantToCloseDialog) {
+                                alertDialog.dismiss();
+                            } else {
+
+                                if (show_category != -1 ){
+                                    Intent intent = new Intent(getContext(), CategoryProductsActivity.class);
+                                    intent.putExtra("category_id",show_category);
+                                    intent.putExtra("bus_user_id",-1);
+                                }
+
+                            }
+                        })
+                .setNegativeButton("Close",
+                        (dialog, id) -> dialog.cancel());
+
+        // create alert dialog
+        alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.red));
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.purple_700));
+
+
     }
 
     private void setViews() {
@@ -149,7 +230,7 @@ public class BuyerDashboardFragment extends Fragment {
                     startActivity(new Intent(view.getContext(), LoginActivity.class));
                 } else if (menuItem.getItemId() == R.id.menu_nearby) {
                     startActivity(new Intent(getContext(), NearByBusinessesActivity.class));
-                    getActivity().overridePendingTransition(0,0);
+                    getActivity().overridePendingTransition(0, 0);
                 } else if (menuItem.getItemId() == R.id.menu_trending) {
 
                 } else if (menuItem.getItemId() == R.id.menu_suggestions) {
@@ -183,13 +264,8 @@ public class BuyerDashboardFragment extends Fragment {
             }
         });
 
-        sortListImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sortList();
-            }
-        });
-
+//        sortListImageView.setOnClickListener(v -> sortList());
+        sortListImageView.setOnClickListener(view -> showSortDialog());
         list.add(
                 new CarouselItem(
                         "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080",
@@ -205,7 +281,75 @@ public class BuyerDashboardFragment extends Fragment {
 
         carousel.addData(list);
 
+        textViewCategories.setOnClickListener(view -> setSpinner());
+
     }
+
+    private void showSortDialog() {
+        LayoutInflater li = LayoutInflater.from(getContext());
+        View promptsView = li.inflate(R.layout.sort_prompt_box, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getContext());
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+        RadioGroup radioGroupOptions = promptsView.findViewById(R.id.search_filter);
+
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Go",
+                        (dialog, id) -> {
+                            //save here
+                            Boolean wantToCloseDialog = false;
+                            //Do stuff, possibly set wantToCloseDialog to true then...
+                            if (wantToCloseDialog) {
+                                alertDialog.dismiss();
+                            } else {
+
+
+                                radioGroupOptions.setOnCheckedChangeListener((group, checkedId) -> {
+                                    Log.e("dld", String.valueOf(checkedId) + " CHECKED");
+
+                                    if (checkedId == R.id.search_ascending) {
+                                        filterRecyclerView("price_asc");
+                                    } else if (checkedId == R.id.search_descending) {
+                                        filterRecyclerView("price_desc");
+                                    } else if (checkedId == R.id.search_az) {
+                                        filterRecyclerView("az_sort");
+                                    } else if (checkedId == R.id.search_za) {
+                                        filterRecyclerView("za_sort");
+                                    }
+                                });
+
+                                if (radioGroupOptions.getCheckedRadioButtonId() == R.id.search_ascending) {
+                                    filterRecyclerView("price_asc");
+                                } else if (radioGroupOptions.getCheckedRadioButtonId() == R.id.search_descending) {
+                                    filterRecyclerView("price_desc");
+                                } else if (radioGroupOptions.getCheckedRadioButtonId() == R.id.search_az) {
+                                    filterRecyclerView("az_sort");
+                                } else if (radioGroupOptions.getCheckedRadioButtonId() == R.id.search_za) {
+                                    filterRecyclerView("za_sort");
+                                }
+
+
+                            }
+                        })
+                .setNegativeButton("Close",
+                        (dialog, id) -> dialog.cancel());
+
+        // create alert dialog
+        alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.red));
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.purple_700));
+
+    }
+
 
     private void checkOutReceipt() {
         total = 0;
@@ -215,8 +359,9 @@ public class BuyerDashboardFragment extends Fragment {
     }
 
     private void setRecyclerView() {
+
         if (productList.size() > 0) {
-            adapter = new TerminalAdapter( this.getContext(), productList);
+            adapter = new TerminalAdapter(this.getContext(), productList);
 
             // setting grid layout manager to implement grid view.
             // in this method '2' represents number of columns to be displayed in grid view.
@@ -251,13 +396,51 @@ public class BuyerDashboardFragment extends Fragment {
     }
 
     public void sortList() {
-
-        adapter.sortList(sortByName(productList));
+        if (adapter != null) {
+            adapter.sortList(sortByName(productList));
+        }
     }
+
+    private void filterRecyclerView(String sort_qry) {
+        List<Product> filteredList = new ArrayList<>();
+        Log.e("dsfafa", sort_qry);
+        if (sort_qry.equals("price_asc")) {
+            for (Product product : roomdb.productDao().getAllProductsAvailablePriceAsc()) {
+                filteredList.add(product);
+            }
+        } else if (sort_qry.equals("price_desc")) {
+            for (Product product : roomdb.productDao().getAllProductsAvailablePriceDesc()) {
+                filteredList.add(product);
+            }
+        } else if (sort_qry.equals("az_sort")) {
+            for (Product product : roomdb.productDao().getAllProductsAvailable()) {
+                filteredList.add(product);
+            }
+        } else if (sort_qry.equals("za_sort")) {
+            for (Product product : roomdb.productDao().getAllProductsAvailableNameDesc()) {
+                filteredList.add(product);
+            }
+        }
+
+        if (adapter != null) {
+            adapter.filterList(filteredList);
+        }
+    }
+
 
     public List<Product> sortByName(List<Product> productList) {
 
         Collections.sort(productList, (product1, product2) -> product1.getProduct_name().compareTo(product2.getProduct_name()));
         return productList;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

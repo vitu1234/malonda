@@ -154,23 +154,25 @@
 
         </androidx.core.widget.NestedScrollView>
 
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_gravity="end"
+            android:clickable="true"
+            android:onClick="openAddProduct"
+            android:id="@+id/fabaddProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/plus_icon"
+            android:tint="@color/white"
+            app:backgroundTint="@color/purple_500"
+            app:fabSize="normal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            />
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:onClick="openAddProduct"
-        android:id="@+id/fabaddProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/plus_icon"
-        android:tint="@color/white"
-        app:backgroundTint="@color/purple_500"
-        app:fabSize="normal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        />
+
 </RelativeLayout>

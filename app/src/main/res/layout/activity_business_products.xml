@@ -18,6 +18,7 @@
         android:padding="16dp">
 
         <ImageView
+            android:layout_marginEnd="5dp"
             android:clickable="true"
             android:background="@drawable/ripple_effect"
             android:id="@+id/buyerMenu"
@@ -138,14 +139,18 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:visibility="gone"
+                android:id="@+id/showCategories1"
+                android:clickable="true"
+                android:background="@drawable/ripple_effect"
+                android:textColor="@color/purple_700"
+                android:visibility="visible"
                 android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:layout_marginEnd="5dp"
-                android:text="@string/press_and_hold_item_to_add_txt"
+                android:text="@string/view_by_category_txt"
                 android:textSize="12sp" />
 
         </RelativeLayout>

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/whitesmoke2"
     android:orientation="vertical"
-    tools:context=".buyer.Fragments.BuyerDashboardFragment">
+    tools:context=".buyer.activities.CategoryProductsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,26 +18,29 @@
         android:padding="16dp">
 
         <ImageView
+            android:onClick="GoBakc"
+            android:layout_marginEnd="5dp"
             android:clickable="true"
             android:background="@drawable/ripple_effect"
-            android:id="@+id/buyerMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:padding="5dp"
-            android:src="@drawable/vertical_dots_icon"
+            android:src="@drawable/arrow_back_icon"
             android:visibility="visible"
             app:tint="@color/purple_700" />
 
-
         <TextView
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:id="@+id/businessName"
             android:textAllCaps="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center_vertical"
-            android:text="@string/app_name"
+            android:text="@string/in_category_txt"
             android:textColor="@color/purple_700"
             android:textSize="14sp" />
 
@@ -98,26 +101,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-        android:visibility="visible"
-        app:carouselType="BLOCK"
-        app:carouselBackground="@color/white"
-        app:showBottomShadow="true"
-        app:showCaption="true"
-        app:showNavigationButtons="true"
-        app:showIndicator="true"
-        app:showTopShadow="true"
 
-        app:autoWidthFixing="true"
-        app:autoPlay="false"
-        app:autoPlayDelay="3000"
-
-
-        android:layout_below="@id/topbar"
-        android:id="@+id/carousel"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="150dp" />
 
 
     <LinearLayout
@@ -125,7 +109,7 @@
         android:elevation="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/carousel"
+        android:layout_below="@id/topbar"
         android:background="@drawable/circularbordersolid"
         android:orientation="vertical">
 
@@ -151,24 +135,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:textColor="@color/purple_700"
-                android:text="@string/all_products"
+                android:text="@string/products_txt"
                 android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/showCategories"
-                android:clickable="true"
-                android:background="@drawable/ripple_effect"
-                android:textColor="@color/purple_700"
-                android:visibility="visible"
-                android:padding="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="5dp"
-                android:text="@string/view_by_category_txt"
-                android:textSize="12sp" />
-
 
         </RelativeLayout>
 

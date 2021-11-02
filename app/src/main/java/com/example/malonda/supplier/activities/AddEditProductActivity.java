@@ -1,6 +1,8 @@
 package com.example.malonda.supplier.activities;
 
 import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -42,22 +45,24 @@ import com.example.malonda.storage.SharedPrefManager;
 import com.example.malonda.utils.BetterActivityResult;
 import com.example.malonda.utils.CheckInternet;
 import com.example.malonda.utils.MyProgressDialog;
+import com.github.drjacky.imagepicker.ImagePicker;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mrntlu.toastie.Toastie;
 import com.squareup.picasso.Picasso;
-import com.sandrios.sandriosCamera.internal.SandriosCamera;
-import com.sandrios.sandriosCamera.internal.configuration.CameraConfiguration;
-import com.sandrios.sandriosCamera.internal.ui.model.Media;
 
 import androidx.activity.result.ActivityResult;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.Intrinsics;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -280,51 +285,87 @@ public class AddEditProductActivity extends AppCompatActivity {
     }
 
     private void launchCamera() {
-        SandriosCamera
+        /* SandriosCamera
                 .with()
                 .setShowPicker(true)
                 .setVideoFileSize(20)
                 .setMediaAction(CameraConfiguration.MEDIA_ACTION_BOTH)
                 .enableImageCropping(true)
-                .launchCamera(this);
+                .launchCamera(this);*/
+        ImagePicker.Companion.with(this)
+                .crop()
+                .maxResultSize(512, 512, true)
+                .createIntentFromDialog((Function1) (new Function1() {
+                    public Object invoke(Object var1) {
+                        this.invoke((Intent) var1);
+//                        return Unit.INSTANCE;
+                        return var1;
+                    }
+
+                    public final void invoke(@NotNull Intent it) {
+                        Intrinsics.checkNotNullParameter(it, "it");
+                        launcher.launch(it);
+                    }
+                }));
 
 
     }
+    ActivityResultLauncher<Intent> launcher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Uri uri = result.getData().getData();
+
+                    if (uri != null) {
+                        Picasso.get().load(uri).into(circleImageViewItemPic);
+                        // Use the uri to load the image
+                        File file = ImagePicker.Companion.getFile(result.getData());
+                        String filePath = ImagePicker.Companion.getFilePath(result.getData());
+                        Log.e("e",filePath+" PATH");
+                        imgFile = new File(filePath);
+
+                        if (product_id != -1) {
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                if (checkInternet.isInternetConnected(this)) {
+                                    changeProductPicture();
+                                } else {
+                                    checkInternet.showInternetDialog(this);
+                                }
+                            }, 100);
+                        }
+                    }else {
+                        Toastie.allCustom(AddEditProductActivity.this)
+                                .setTypeFace(Typeface.DEFAULT_BOLD)
+                                .setTextSize(16)
+                                .setCardRadius(25)
+                                .setCardElevation(10)
+                                .setIcon(R.drawable.ic_error_black_24dp)
+                                .setCardBackgroundColor(R.color.red)
+                                .setMessage("Failed getting file selected!")
+                                .setGravity(Gravity.BOTTOM, 5, 5)
+                                .createToast(Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
+                    // Use ImagePicker.Companion.getError(result.getData()) to show an error
+                    Toastie.allCustom(AddEditProductActivity.this)
+                            .setTypeFace(Typeface.DEFAULT_BOLD)
+                            .setTextSize(16)
+                            .setCardRadius(25)
+                            .setCardElevation(10)
+                            .setIcon(R.drawable.ic_error_black_24dp)
+                            .setCardBackgroundColor(R.color.red)
+                            .setMessage(ImagePicker.Companion.getError(result.getData()))
+                            .setGravity(Gravity.BOTTOM, 5, 5)
+                            .createToast(Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK
-                && requestCode == SandriosCamera.RESULT_CODE
-                && data != null) {
-            if (data.getSerializableExtra(SandriosCamera.MEDIA) instanceof Media) {
-                Media media = (Media) data.getSerializableExtra(SandriosCamera.MEDIA);
+        if (resultCode == Activity.RESULT_OK){
 
-                Log.e("File", "" + media.getPath());
-                Log.e("Type", "" + media.getType());
-
-
-                if (media.getType() == 1) {
-                    progressDialog.showErrorToast("Video not allowed!");
-                } else {
-                    imgFile = new File(media.getPath());
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    circleImageViewItemPic.setImageBitmap(myBitmap);
-//                    Toast.makeText(getApplicationContext(), "Media captured.", Toast.LENGTH_SHORT).show();
-                    if (product_id != -1) {
-                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                            if (checkInternet.isInternetConnected(this)) {
-                                changeProductPicture();
-                            } else {
-                                checkInternet.showInternetDialog(this);
-                            }
-                        }, 100);
-                    }
-
-
-                }
-
-            }
         }
     }
 

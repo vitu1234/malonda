@@ -79,4 +79,6 @@
     <string name="map_txt">Map</string>
     <string name="all_products">All Products</string>
     <string name="products_txt">Products</string>
+    <string name="view_by_category_txt">View by Category</string>
+    <string name="in_category_txt">In Category</string>
 </resources>
