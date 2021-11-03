@@ -83,4 +83,9 @@
     <string name="in_category_txt">In Category</string>
     <string name="reports_txt">Reports</string>
     <string name="point_of_sale_txt">Point of Sale</string>
+    <string name="payment_method_txt">Payment Method</string>
+    <string name="visa_paypal_payment_txt">Card Payment</string>
+    <string name="cash_payment_txt">Cash Payment</string>
+    <string name="customer_details_txt">Customer Details</string>
+    <string name="customer_name_txt">Customer Name</string>
 </resources>

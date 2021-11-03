@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.malonda.R;
 import com.example.malonda.adapters.POSAdapter;
-import com.example.malonda.buyer.activities.SalesCheckoutActivity;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.POS;
 import com.example.malonda.models.Product;

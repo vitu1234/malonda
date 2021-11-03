@@ -21,6 +21,7 @@ import com.example.malonda.adapters.TerminalAdapter;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.Product;
 import com.example.malonda.room.AppDatabase;
+import com.example.malonda.supplier.activities.SalesCheckoutActivity;
 import com.example.malonda.utils.MyProgressDialog;
 import com.google.android.material.textfield.TextInputLayout;
 

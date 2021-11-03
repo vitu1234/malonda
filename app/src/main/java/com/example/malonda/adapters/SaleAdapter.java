@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.malonda.R;
-import com.example.malonda.buyer.activities.SalesCheckoutActivity;
+import com.example.malonda.supplier.activities.SalesCheckoutActivity;
 import com.example.malonda.models.POS;
 import com.example.malonda.models.Product;
 import com.example.malonda.room.AppDatabase;
@@ -233,7 +233,7 @@ public class SaleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         buttonAddQty = promptsView.findViewById(R.id.button3);
 
         textViewprodNameTitle.setText(entity.getProduct_name());
-        textViewQtyStock.setText(qty1 + "");
+        textViewQtyStock.setText(entity.getQty() + "");
         textViewPrice.setText("K" + (qty1 * (Integer.parseInt(entity.getPrice()))));
 
 

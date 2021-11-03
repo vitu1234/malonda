@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/whitesmoke2"
     android:orientation="vertical"
-    tools:context=".buyer.activities.SalesCheckoutActivity">
+    tools:context=".supplier.activities.SalesCheckoutActivity">
 
     <View
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
 
             <ImageView
                 android:id="@+id/payBtn"
-                android:onClick="goback"
+                android:onClick="setPayments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -74,6 +74,7 @@
                 app:srcCompat="@drawable/payment_icon"
                 app:tint="@color/purple_700" />
             <TextView
+                android:onClick="setPayments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/payBtn"

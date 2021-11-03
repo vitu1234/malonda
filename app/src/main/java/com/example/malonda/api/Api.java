@@ -4,10 +4,8 @@ import com.example.malonda.models.AllDataResponse;
 import com.example.malonda.models.LoginResponse;
 
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -17,7 +15,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
 public interface Api {
@@ -31,6 +28,7 @@ public interface Api {
             @Field("phone") String email,
             @Field("password") String password
     );
+
     //add product with picture
     @Multipart
     @POST("add_product")
@@ -72,6 +70,27 @@ public interface Api {
             @Field("business_address") String business_address,
             @Field("longtude") String longtude,
             @Field("latitude") String latitude
+    );
+
+    //add sale phone, name, payment_method, product_id, qty, total_amount
+    @FormUrlEncoded
+    @POST("add_sale")
+    Call<AllDataResponse> add_sale(
+            @Field("phone") String phone,
+            @Field("name") String name,
+            @Field("payment_method") String payment_method,
+            @Field("product_id[]") List<Integer> product_id,
+            @Field("qty[]") List<Integer> qty,
+            @Field("total") double total,
+            @Field("bus_user_id") double bus_user_id
+
+    );
+
+    @FormUrlEncoded
+    @POST("convert_currency")
+        //what kind of response? use ResponseBody if you don't know the kind of response that you will get
+    Call<AllDataResponse> convertCurrency(
+            @Field("amount") String amount
     );
 
 
@@ -128,7 +147,6 @@ public interface Api {
             @Field("longtude") String longtude,
             @Field("latitude") String latitude
     );
-
 
 
     //change product picture
