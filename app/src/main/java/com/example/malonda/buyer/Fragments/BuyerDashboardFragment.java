@@ -27,14 +27,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.malonda.R;
 import com.example.malonda.adapters.CustomSpinnerAdapter;
 import com.example.malonda.adapters.TerminalAdapter;
+import com.example.malonda.api.RetrofitClient;
 import com.example.malonda.buyer.activities.CategoryProductsActivity;
 import com.example.malonda.buyer.activities.NearByBusinessesActivity;
-import com.example.malonda.supplier.activities.SalesCheckoutActivity;
 import com.example.malonda.common.LoginActivity;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.POS;
 import com.example.malonda.models.Product;
+import com.example.malonda.models.ProductSales;
 import com.example.malonda.room.AppDatabase;
+import com.example.malonda.supplier.activities.SalesCheckoutActivity;
 import com.example.malonda.utils.MyProgressDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -130,10 +132,10 @@ public class BuyerDashboardFragment extends Fragment implements AdapterView.OnIt
 
     private void setSpinner() {
         String[] category_names = new String[categoryList.size()];
-        int[] category_ids = new  int[categoryList.size()];
-        for (int i =0;i<categoryList.size();i++){
-            category_ids[i]=categoryList.get(i).getCategory_id();
-            category_names[i]=categoryList.get(i).getCategory_name();
+        int[] category_ids = new int[categoryList.size()];
+        for (int i = 0; i < categoryList.size(); i++) {
+            category_ids[i] = categoryList.get(i).getCategory_id();
+            category_names[i] = categoryList.get(i).getCategory_name();
         }
 
         LayoutInflater li = LayoutInflater.from(getContext());
@@ -145,12 +147,12 @@ public class BuyerDashboardFragment extends Fragment implements AdapterView.OnIt
         // set prompts.xml to alertdialog builder
         alertDialogBuilder.setView(promptsView);
         Spinner spinner = promptsView.findViewById(R.id.categorySpinner);
-        CustomSpinnerAdapter customAdapter=new CustomSpinnerAdapter(getContext(),category_ids,category_names);
+        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getContext(), category_ids, category_names);
         spinner.setAdapter(customAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("e",category_names[i]+" ID: "+category_ids[i]);
+                Log.e("e", category_names[i] + " ID: " + category_ids[i]);
                 show_category = category_ids[i];
             }
 
@@ -172,10 +174,10 @@ public class BuyerDashboardFragment extends Fragment implements AdapterView.OnIt
                                 alertDialog.dismiss();
                             } else {
 
-                                if (show_category != -1 ){
+                                if (show_category != -1) {
                                     Intent intent = new Intent(getContext(), CategoryProductsActivity.class);
-                                    intent.putExtra("category_id",show_category);
-                                    intent.putExtra("bus_user_id",-1);
+                                    intent.putExtra("category_id", show_category);
+                                    intent.putExtra("bus_user_id", -1);
                                     startActivity(intent);
                                 }
 
@@ -231,9 +233,9 @@ public class BuyerDashboardFragment extends Fragment implements AdapterView.OnIt
                 } else if (menuItem.getItemId() == R.id.menu_nearby) {
                     startActivity(new Intent(getContext(), NearByBusinessesActivity.class));
                     getActivity().overridePendingTransition(0, 0);
-                } else if (menuItem.getItemId() == R.id.menu_trending) {
-
-                } else if (menuItem.getItemId() == R.id.menu_suggestions) {
+//                } else if (menuItem.getItemId() == R.id.menu_trending) {
+//
+//                } else if (menuItem.getItemId() == R.id.menu_suggestions) {
 
                 } else if (menuItem.getItemId() == R.id.menu_about) {
 
@@ -264,20 +266,23 @@ public class BuyerDashboardFragment extends Fragment implements AdapterView.OnIt
             }
         });
 
+        if (roomdb.productSalesDao().countAllProductSales() > 0) {
+            List<ProductSales> productSales = roomdb.productSalesDao().getAllProductSales();
+            for (int i = 0; i < productSales.size(); i++) {
+                list.add(
+                        new CarouselItem(
+                                RetrofitClient.BASE_URL2 + "images/products/" + roomdb.productDao().findByProductId(productSales.get(i).getProduct_id()).getImg_url(),
+                                "Recently Purchased"
+                        )
+                );
+            }
+        } else {
+
+        }
+
 //        sortListImageView.setOnClickListener(v -> sortList());
         sortListImageView.setOnClickListener(view -> showSortDialog());
-        list.add(
-                new CarouselItem(
-                        "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080",
-                        "Photo by Aaron Wu on Unsplash"
-                )
-        );
-        list.add(
-                new CarouselItem(
-                        "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080",
-                        "Photo by Johannes Plenio on Unsplash"
-                )
-        );
+
 
         carousel.addData(list);
 
@@ -365,7 +370,7 @@ public class BuyerDashboardFragment extends Fragment implements AdapterView.OnIt
 
             // setting grid layout manager to implement grid view.
             // in this method '2' represents number of columns to be displayed in grid view.
-            GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2, LinearLayoutManager.VERTICAL,false);
+            GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2, LinearLayoutManager.VERTICAL, false);
 
 
             // at last set adapter to recycler view.
