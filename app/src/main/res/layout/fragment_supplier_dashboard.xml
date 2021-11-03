@@ -183,11 +183,20 @@
                             android:fontFamily="@font/poppins_medium"
                             android:text="@string/sales_txt"
                             android:textColor="@color/purple_500" />
-
+                        <TextView
+                            android:id="@+id/dashSoldCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_tittle3"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/poppins_light"
+                            android:text="@string/products_counter_txt"
+                            android:textSize="12sp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/relativeLayoutreports"
                         android:layout_width="150dp"
                         android:layout_height="180dp"
                         android:layout_margin="15dp"
@@ -221,6 +230,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -228,6 +238,7 @@
                     android:visibility="visible">
 
                     <RelativeLayout
+                        android:visibility="gone"
                         android:layout_width="150dp"
                         android:layout_height="180dp"
                         android:layout_margin="15dp"

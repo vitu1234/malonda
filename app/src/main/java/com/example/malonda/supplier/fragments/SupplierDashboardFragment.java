@@ -23,6 +23,7 @@ import com.example.malonda.supplier.activities.AddEditBusinessInfoActivity;
 import com.example.malonda.supplier.activities.BusSalesActivity;
 import com.example.malonda.supplier.activities.MyProductsActivity;
 import com.example.malonda.supplier.activities.POSActivity;
+import com.example.malonda.supplier.activities.ReportsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,9 +31,9 @@ import com.example.malonda.supplier.activities.POSActivity;
  * create an instance of this fragment.
  */
 public class SupplierDashboardFragment extends Fragment {
-    TextView textViewProductsCount, textViewOrdersCount;
+    TextView textViewProductsCount, textViewOrdersCount, textViewSold;
     SwipeRefreshLayout swipeRefreshLayout;
-    RelativeLayout relativeLayoutMyProducts, relativeLayoutPOS, relativeLayoutSales;
+    RelativeLayout relativeLayoutMyProducts, relativeLayoutPOS, relativeLayoutSales, relativeLayoutReports;
     ImageView imageViewLogout;
 
     AppDatabase room_db;
@@ -77,6 +78,8 @@ public class SupplierDashboardFragment extends Fragment {
         imageViewLogout = view.findViewById(R.id.dashLogout);
         relativeLayoutPOS = view.findViewById(R.id.relativeLayoutPOS);
         relativeLayoutSales = view.findViewById(R.id.relativeLayoutSales);
+        textViewSold = view.findViewById(R.id.dashSoldCount);
+        relativeLayoutReports = view.findViewById(R.id.relativeLayoutreports);
 
         room_db = AppDatabase.getDbInstance(getContext());
         sharedPrefManager = SharedPrefManager.getInstance(getContext());
@@ -137,14 +140,14 @@ public class SupplierDashboardFragment extends Fragment {
             //add shared animation
 
             startActivity(intent);
-            getActivity().overridePendingTransition(0,0);
+            getActivity().overridePendingTransition(0, 0);
         });
         relativeLayoutPOS.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), POSActivity.class);
             //add shared animation
 
             startActivity(intent);
-            getActivity().overridePendingTransition(0,0);
+            getActivity().overridePendingTransition(0, 0);
 
         });
 
@@ -153,7 +156,15 @@ public class SupplierDashboardFragment extends Fragment {
             //add shared animation
 
             startActivity(intent);
-            getActivity().overridePendingTransition(0,0);
+            getActivity().overridePendingTransition(0, 0);
+        });
+
+        relativeLayoutReports.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), ReportsActivity.class);
+            //add shared animation
+
+            startActivity(intent);
+            getActivity().overridePendingTransition(0, 0);
         });
 
     }
@@ -163,6 +174,7 @@ public class SupplierDashboardFragment extends Fragment {
         int user_available_products = room_db.productDao().getUserAvailableProductCount(user_id);
         textViewProductsCount.setText(user_products + " Products");
         textViewOrdersCount.setText(user_available_products + " Products");
+        textViewSold.setText(room_db.saleDao().getSingleSaleBusCount(user_id) + " Sales");
 
         imageViewLogout.setOnClickListener(view -> {
             sharedPrefManager.logoutUser();

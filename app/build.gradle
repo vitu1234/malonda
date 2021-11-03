@@ -84,7 +84,10 @@ dependencies {
     //paypal payment
     implementation('com.paypal.checkout:android-sdk:0.2.0')
 
-
+    // Add this line if was not added before.
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation files('libs/com.datecs.api.jar')
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 
 }

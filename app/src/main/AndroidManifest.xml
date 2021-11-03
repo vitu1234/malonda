@@ -33,7 +33,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Malonda"
         android:usesCleartextTraffic="true">
-        <activity android:name=".supplier.activities.SaleProductsActivity"></activity>
+        <activity android:name=".supplier.activities.DailySaleReportActivity"></activity>
+        <activity android:name=".supplier.activities.SalesSummaryActivity" />
+        <activity android:name=".supplier.activities.ReportsActivity" />
+        <activity android:name=".supplier.activities.SaleProductsActivity" />
         <activity android:name=".supplier.activities.BusSalesActivity" />
         <activity android:name=".supplier.activities.CheckoutActivity" />
         <activity android:name=".supplier.activities.POSActivity" />
