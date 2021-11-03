@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Malonda"
         android:usesCleartextTraffic="true">
-        <activity android:name=".buyer.activities.CategoryProductsActivity"></activity>
+        <activity android:name=".supplier.activities.POSActivity"></activity>
+        <activity android:name=".buyer.activities.CategoryProductsActivity" />
         <activity android:name=".buyer.activities.BusinessProductsActivity" />
         <activity android:name=".buyer.activities.NearByBusinessesActivity" />
 

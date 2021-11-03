@@ -17,7 +17,7 @@
     <string name="products_counter_txt">10 Products</string>
     <string name="orders_count_txt">10 Orders</string>
     <string name="sales_txt">Sales</string>
-    <string name="sales_count_txt">10 Delivered</string>
+    <string name="sales_count_txt">10 Sold</string>
     <string name="settings_txt">Settings</string>
     <string name="my_products_txt">My Products</string>
     <string name="title_activity_login">LoginActivity</string>
@@ -81,4 +81,6 @@
     <string name="products_txt">Products</string>
     <string name="view_by_category_txt">View by Category</string>
     <string name="in_category_txt">In Category</string>
+    <string name="reports_txt">Reports</string>
+    <string name="point_of_sale_txt">Point of Sale</string>
 </resources>

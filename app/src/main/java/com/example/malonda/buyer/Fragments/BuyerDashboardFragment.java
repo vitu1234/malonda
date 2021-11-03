@@ -23,6 +23,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.malonda.R;
@@ -366,7 +367,8 @@ public class BuyerDashboardFragment extends Fragment implements AdapterView.OnIt
 
             // setting grid layout manager to implement grid view.
             // in this method '2' represents number of columns to be displayed in grid view.
-            GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2);
+            GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2, LinearLayoutManager.VERTICAL,false);
+
 
             // at last set adapter to recycler view.
             recyclerViewPosTerminal.setLayoutManager(layoutManager);

@@ -1,3 +1,4 @@
+
 package com.example.malonda.adapters;
 
 import android.content.Context;
@@ -19,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.malonda.R;
 import com.example.malonda.api.RetrofitClient;
-import com.example.malonda.buyer.Fragments.BuyerDashboardFragment;
 import com.example.malonda.buyer.activities.ProductDetailsActivity;
 import com.example.malonda.models.AllDataResponse;
 import com.example.malonda.models.BusinessInfo;
@@ -29,6 +29,7 @@ import com.example.malonda.models.Product;
 import com.example.malonda.models.Unit;
 import com.example.malonda.models.User;
 import com.example.malonda.room.AppDatabase;
+import com.example.malonda.supplier.activities.POSActivity;
 import com.example.malonda.utils.CheckInternet;
 import com.example.malonda.utils.MyProgressDialog;
 import com.squareup.picasso.Picasso;
@@ -37,7 +38,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-public class TerminalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class POSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
     Call<AllDataResponse> call;
@@ -55,12 +56,12 @@ public class TerminalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final int SHOW_MENU = 1;
     private final int HIDE_MENU = 2;
 
-//    BuyerDashboardFragment posTerminalFragment;
+    POSActivity posTerminalFragment;
 
-    public TerminalAdapter( Context context, List<Product> productList) {
-        this.context = context;
+    public POSAdapter(POSActivity posTerminalFragment,Context context, List<Product> productList) {
+        this.context = posTerminalFragment.getApplicationContext();
         this.productList = productList;
-//        this.posTerminalFragment = posTerminalFragment;
+        this.posTerminalFragment = posTerminalFragment;
     }
 
     @NonNull
@@ -103,25 +104,25 @@ public class TerminalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                     vibe.vibrate(100);
 
-                    Intent intent = new Intent(context.getApplicationContext(), ProductDetailsActivity.class);
-                    intent.putExtra("product_id",productList.get(position).getProduct_id());
-                    context.startActivity(intent);
+//                    Intent intent = new Intent(context.getApplicationContext(), ProductDetailsActivity.class);
+//                    intent.putExtra("product_id", productList.get(position).getProduct_id());
+//                    context.startActivity(intent);
 
 
-//                    POS pos = new POS();
-//                    pos.setProduct_id(productList.get(position).getProduct_id());
-//                    pos.setQty(Integer.parseInt(1+""));
-//                    pos.setTotal((double) Integer.parseInt(productList.get(position).getPrice()) );
-//                    room_db.posDao().insertPos(pos);
-//
-//                    double total = 0;
-//                    List<POS> posList = room_db.posDao().getAllPos();
-//                    for (int i = 0; i < posList.size(); i++) {
-//                        total += posList.get(i).getTotal();
-//                    }
-//
-//                    posTerminalFragment.textViewTotalItems.setText("Items: K" + total);
-//                    posTerminalFragment.buttonDiscard.setVisibility(View.VISIBLE);
+                    POS pos = new POS();
+                    pos.setProduct_id(productList.get(position).getProduct_id());
+                    pos.setQty(Integer.parseInt(1+""));
+                    pos.setTotal((double) Integer.parseInt(productList.get(position).getPrice()) );
+                    room_db.posDao().insertPos(pos);
+
+                    double total = 0;
+                    List<POS> posList = room_db.posDao().getAllPos();
+                    for (int i = 0; i < posList.size(); i++) {
+                        total += posList.get(i).getTotal();
+                    }
+
+                    posTerminalFragment.textViewTotalItems.setText("Items: K" + total);
+                    posTerminalFragment.buttonDiscard.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -304,13 +305,10 @@ public class TerminalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-
-
     public void swapItems(List<Product> productList) {
         this.productList = productList;
         notifyDataSetChanged();
     }
-
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
@@ -342,3 +340,4 @@ public class TerminalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
 }
+

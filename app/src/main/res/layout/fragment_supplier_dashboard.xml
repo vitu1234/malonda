@@ -8,217 +8,285 @@
     android:scrollbars="none"
     tools:context=".supplier.fragments.SupplierDashboardFragment">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
+            android:elevation="8dp"
+            android:padding="16dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/dashLogout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/white"
-                android:elevation="8dp"
-                android:padding="16dp">
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ripple_effect"
+                android:clickable="true"
+                android:padding="5dp"
+                android:src="@drawable/logout_icon"
+                android:visibility="visible"
+                app:tint="@color/purple_700" />
 
-                <ImageView
-                    android:clickable="true"
-                    android:background="@drawable/ripple_effect"
-                    android:id="@+id/dashLogout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:padding="5dp"
-                    android:src="@drawable/logout_icon"
-                    android:visibility="visible"
-                    app:tint="@color/purple_700" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/poppins_bold"
-                    android:gravity="center_vertical"
-                    android:text="@string/dashboard_txt"
-                    android:textColor="@color/purple_700"
-                    android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center_vertical"
+                android:text="@string/dashboard_txt"
+                android:textColor="@color/purple_700"
+                android:textSize="14sp" />
 
 
-            </RelativeLayout>
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/relativeLayoutMyProducts"
-                    android:transitionName="toMyProductsTransition"
-                    android:layout_width="150dp"
-                    android:layout_height="180dp"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_effect"
-                    android:clickable="true"
-                    android:elevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/dash_img1"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="30dp"
-                        android:src="@drawable/my_products_icon"
-                        app:tint="@color/purple_700" />
+                    <RelativeLayout
+                        android:id="@+id/relativeLayoutMyProducts"
+                        android:layout_width="150dp"
+                        android:layout_height="180dp"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ripple_effect"
+                        android:clickable="true"
+                        android:elevation="5dp"
+                        android:transitionName="toMyProductsTransition">
 
-                    <TextView
-                        android:id="@+id/dash_tittle1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dash_img1"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="@string/my_products_txt"
-                        android:textColor="@color/purple_500" />
+                        <ImageView
+                            android:id="@+id/dash_img1"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/my_products_icon"
+                            app:tint="@color/purple_700" />
 
-                    <TextView
-                        android:id="@+id/dashProductsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dash_tittle1"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/poppins_light"
-                        android:text="@string/products_counter_txt"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/dash_tittle1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_img1"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/my_products_txt"
+                            android:textColor="@color/purple_500" />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/dashProductsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_tittle1"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/poppins_light"
+                            android:text="@string/products_counter_txt"
+                            android:textSize="12sp" />
 
-                <RelativeLayout
-                    android:layout_width="150dp"
-                    android:layout_height="180dp"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_effect"
-                    android:elevation="5dp">
+                    </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/dash_img2"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="30dp"
-                        android:src="@drawable/cart_plus"
-                        app:tint="@color/purple_700" />
+                    <RelativeLayout
+                        android:id="@+id/relativeLayoutPOS"
+                        android:layout_width="150dp"
+                        android:layout_height="180dp"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ripple_effect"
+                        android:clickable="true"
+                        android:elevation="5dp">
 
-                    <TextView
-                        android:id="@+id/dash_tittle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dash_img2"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="@string/all_orders_txt"
-                        android:textColor="@color/purple_500" />
+                        <ImageView
+                            android:id="@+id/dash_img2"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/cart_plus"
+                            app:tint="@color/purple_700" />
 
-                    <TextView
-                        android:id="@+id/dashOrdersCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dash_tittle2"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/poppins_light"
-                        android:text="@string/orders_count_txt"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/dash_tittle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_img2"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/point_of_sale_txt"
+                            android:textColor="@color/purple_500" />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/dashOrdersCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_tittle2"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/poppins_light"
+                            android:text="@string/products_counter_txt"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="180dp"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ripple_effect"
+                        android:elevation="5dp">
+
+                        <ImageView
+                            android:id="@+id/dash_img3"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/sell_icon"
+                            app:tint="@color/purple_700" />
+
+                        <TextView
+                            android:id="@+id/dash_tittle3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_img3"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/sales_txt"
+                            android:textColor="@color/purple_500" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="180dp"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ripple_effect"
+                        android:elevation="5dp">
+
+                        <ImageView
+                            android:id="@+id/dash_img4"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/settings_icon"
+                            app:tint="@color/purple_700" />
+
+                        <TextView
+                            android:id="@+id/dash_tittle4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_img4"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/settings_txt"
+                            android:textColor="@color/purple_500" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="180dp"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ripple_effect"
+                        android:elevation="5dp">
+
+                        <ImageView
+                            android:id="@+id/dash_img5"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/graph_icon"
+                            app:tint="@color/purple_700" />
+
+                        <TextView
+                            android:id="@+id/dash_tittle5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_img5"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/reports_txt"
+                            android:textColor="@color/purple_500" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="180dp"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ripple_effect"
+                        android:elevation="5dp"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:id="@+id/dash_img6"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/settings_icon"
+                            app:tint="@color/purple_700" />
+
+                        <TextView
+                            android:id="@+id/dash_tittle6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dash_img6"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/settings_txt"
+                            android:textColor="@color/purple_500" />
+
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="150dp"
-                    android:layout_height="180dp"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_effect"
-                    android:elevation="5dp">
-
-                    <ImageView
-                        android:id="@+id/dash_img3"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="30dp"
-                        android:src="@drawable/sell_icon"
-                        app:tint="@color/purple_700" />
-
-                    <TextView
-                        android:id="@+id/dash_tittle3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dash_img3"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="@string/sales_txt"
-                        android:textColor="@color/purple_500" />
-
-                    <TextView
-                        android:id="@+id/dashSalesCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dash_tittle3"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/poppins_light"
-                        android:text="@string/sales_count_txt"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="150dp"
-                    android:layout_height="180dp"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_effect"
-                    android:elevation="5dp">
-
-                    <ImageView
-                        android:id="@+id/dash_img4"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="30dp"
-                        android:src="@drawable/settings_icon"
-                        app:tint="@color/purple_700" />
-
-                    <TextView
-                        android:id="@+id/dash_tittle4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dash_img4"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="@string/settings_txt"
-                        android:textColor="@color/purple_500" />
-
-                </RelativeLayout>
-            </LinearLayout>
-
-
-        </LinearLayout>
-    </ScrollView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

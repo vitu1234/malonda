@@ -24,8 +24,14 @@ public interface ProductDao {
     @Query("SELECT *FROM product WHERE qty >0 ORDER BY price ASC")
     List<Product> getAllProductsAvailablePriceAsc();
 
+    @Query("SELECT *FROM product WHERE qty >0 AND user_id =:user_id ORDER BY price ASC")
+    List<Product> getAllUserProductsAvailablePriceAsc(int user_id);
+
     @Query("SELECT *FROM product WHERE qty >0 ORDER BY price DESC")
     List<Product> getAllProductsAvailablePriceDesc();
+
+    @Query("SELECT *FROM product WHERE qty >0 AND user_id =:user_id ORDER BY price DESC")
+    List<Product> getAllUserProductsAvailablePriceDesc(int user_id);
 
     //SORT WITH USER ID
     @Query("SELECT *FROM product WHERE user_id=:user_id AND qty >0 ORDER BY price ASC")
@@ -115,6 +121,9 @@ public interface ProductDao {
 
     @Query("SELECT COUNT(*) FROM product WHERE user_id = :id")
     int getUserProductCount(int id);
+
+    @Query("SELECT COUNT(*) FROM product WHERE qty >0 AND user_id = :id")
+    int getUserAvailableProductCount(int id);
 
 
     //count all car

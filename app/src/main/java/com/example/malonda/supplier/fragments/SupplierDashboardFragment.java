@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.example.malonda.room.AppDatabase;
 import com.example.malonda.storage.SharedPrefManager;
 import com.example.malonda.supplier.activities.AddEditBusinessInfoActivity;
 import com.example.malonda.supplier.activities.MyProductsActivity;
+import com.example.malonda.supplier.activities.POSActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,9 +29,9 @@ import com.example.malonda.supplier.activities.MyProductsActivity;
  * create an instance of this fragment.
  */
 public class SupplierDashboardFragment extends Fragment {
-    TextView textViewProductsCount, textViewOrdersCount, textViewSalesCount;
+    TextView textViewProductsCount, textViewOrdersCount;
     SwipeRefreshLayout swipeRefreshLayout;
-    RelativeLayout relativeLayoutMyProducts;
+    RelativeLayout relativeLayoutMyProducts, relativeLayoutPOS;
     ImageView imageViewLogout;
 
     AppDatabase room_db;
@@ -69,20 +71,32 @@ public class SupplierDashboardFragment extends Fragment {
 
         textViewProductsCount = view.findViewById(R.id.dashProductsCount);
         textViewOrdersCount = view.findViewById(R.id.dashOrdersCount);
-        textViewSalesCount = view.findViewById(R.id.dashSalesCount);
         swipeRefreshLayout = view.findViewById(R.id.supplierDashSwiperefresh);
         relativeLayoutMyProducts = view.findViewById(R.id.relativeLayoutMyProducts);
         imageViewLogout = view.findViewById(R.id.dashLogout);
+        relativeLayoutPOS = view.findViewById(R.id.relativeLayoutPOS);
 
         room_db = AppDatabase.getDbInstance(getContext());
         sharedPrefManager = SharedPrefManager.getInstance(getContext());
         user_id = sharedPrefManager.getUser().getUser_id();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshViewData();
+            }
+        });
 
         setViewValues();
         setOnclickListeners();
         checkBusinessInfo();
 
         return view;
+    }
+
+    private void refreshViewData() {
+        swipeRefreshLayout.setRefreshing(false);
+        Toast.makeText(getContext(), "Will refresh view here", Toast.LENGTH_SHORT).show();
     }
 
     private void checkBusinessInfo() {
@@ -123,11 +137,21 @@ public class SupplierDashboardFragment extends Fragment {
             startActivity(intent);
 
         });
+        relativeLayoutPOS.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), POSActivity.class);
+            //add shared animation
+
+            startActivity(intent);
+
+        });
+
     }
 
     private void setViewValues() {
         int user_products = room_db.productDao().getUserProductCount(user_id);
-        textViewProductsCount.setText(user_products + " Products");
+        int user_available_products = room_db.productDao().getUserAvailableProductCount(user_id);
+        textViewProductsCount.setText(user_products +  " Products");
+        textViewOrdersCount.setText(user_available_products + " Products");
 
         imageViewLogout.setOnClickListener(view -> {
             sharedPrefManager.logoutUser();
