@@ -11,20 +11,31 @@ import com.example.malonda.models.BusinessLocationDistance;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.POS;
 import com.example.malonda.models.Product;
+import com.example.malonda.models.ProductSales;
+import com.example.malonda.models.Sale;
 import com.example.malonda.models.Unit;
 import com.example.malonda.models.User;
 
 
-@Database(entities = {User.class, BusinessInfo.class, Category.class, Product.class, Unit.class, POS.class, BusinessLocationDistance.class}, exportSchema = false, version = 2)
+@Database(entities = {User.class, BusinessInfo.class, Category.class, Product.class, Unit.class, POS.class, BusinessLocationDistance.class, Sale.class, ProductSales.class}, exportSchema = false, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
+
     public abstract BusinessInfoDao businessInfoDao();
+
     public abstract CategoryDao categoryDao();
+
     public abstract ProductDao productDao();
+
     public abstract UnitDao unitDao();
+
     public abstract PosDao posDao();
+
     public abstract BusinessLocationDistanceDao businessLocationDistanceDao();
 
+    public abstract SaleDao saleDao();
+
+    public abstract ProductSalesDao productSalesDao();
 
 
     private static AppDatabase INSTANCE;

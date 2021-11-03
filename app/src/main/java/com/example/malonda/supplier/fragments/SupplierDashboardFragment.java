@@ -20,6 +20,7 @@ import com.example.malonda.buyer.activities.BuyerDashboardActivity;
 import com.example.malonda.room.AppDatabase;
 import com.example.malonda.storage.SharedPrefManager;
 import com.example.malonda.supplier.activities.AddEditBusinessInfoActivity;
+import com.example.malonda.supplier.activities.BusSalesActivity;
 import com.example.malonda.supplier.activities.MyProductsActivity;
 import com.example.malonda.supplier.activities.POSActivity;
 
@@ -31,7 +32,7 @@ import com.example.malonda.supplier.activities.POSActivity;
 public class SupplierDashboardFragment extends Fragment {
     TextView textViewProductsCount, textViewOrdersCount;
     SwipeRefreshLayout swipeRefreshLayout;
-    RelativeLayout relativeLayoutMyProducts, relativeLayoutPOS;
+    RelativeLayout relativeLayoutMyProducts, relativeLayoutPOS, relativeLayoutSales;
     ImageView imageViewLogout;
 
     AppDatabase room_db;
@@ -75,6 +76,7 @@ public class SupplierDashboardFragment extends Fragment {
         relativeLayoutMyProducts = view.findViewById(R.id.relativeLayoutMyProducts);
         imageViewLogout = view.findViewById(R.id.dashLogout);
         relativeLayoutPOS = view.findViewById(R.id.relativeLayoutPOS);
+        relativeLayoutSales = view.findViewById(R.id.relativeLayoutSales);
 
         room_db = AppDatabase.getDbInstance(getContext());
         sharedPrefManager = SharedPrefManager.getInstance(getContext());
@@ -135,14 +137,23 @@ public class SupplierDashboardFragment extends Fragment {
             //add shared animation
 
             startActivity(intent);
-
+            getActivity().overridePendingTransition(0,0);
         });
         relativeLayoutPOS.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), POSActivity.class);
             //add shared animation
 
             startActivity(intent);
+            getActivity().overridePendingTransition(0,0);
 
+        });
+
+        relativeLayoutSales.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), BusSalesActivity.class);
+            //add shared animation
+
+            startActivity(intent);
+            getActivity().overridePendingTransition(0,0);
         });
 
     }
@@ -150,7 +161,7 @@ public class SupplierDashboardFragment extends Fragment {
     private void setViewValues() {
         int user_products = room_db.productDao().getUserProductCount(user_id);
         int user_available_products = room_db.productDao().getUserAvailableProductCount(user_id);
-        textViewProductsCount.setText(user_products +  " Products");
+        textViewProductsCount.setText(user_products + " Products");
         textViewOrdersCount.setText(user_available_products + " Products");
 
         imageViewLogout.setOnClickListener(view -> {

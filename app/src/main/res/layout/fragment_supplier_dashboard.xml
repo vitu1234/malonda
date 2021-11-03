@@ -155,6 +155,8 @@
                     android:orientation="horizontal">
 
                     <RelativeLayout
+                        android:clickable="true"
+                        android:id="@+id/relativeLayoutSales"
                         android:layout_width="150dp"
                         android:layout_height="180dp"
                         android:layout_margin="15dp"
@@ -194,43 +196,6 @@
                         android:elevation="5dp">
 
                         <ImageView
-                            android:id="@+id/dash_img4"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
-                            android:src="@drawable/settings_icon"
-                            app:tint="@color/purple_700" />
-
-                        <TextView
-                            android:id="@+id/dash_tittle4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/dash_img4"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/poppins_medium"
-                            android:text="@string/settings_txt"
-                            android:textColor="@color/purple_500" />
-
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="150dp"
-                        android:layout_height="180dp"
-                        android:layout_margin="15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/ripple_effect"
-                        android:elevation="5dp">
-
-                        <ImageView
                             android:id="@+id/dash_img5"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
@@ -253,17 +218,25 @@
 
                     </RelativeLayout>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
                     <RelativeLayout
                         android:layout_width="150dp"
                         android:layout_height="180dp"
                         android:layout_margin="15dp"
                         android:layout_weight="1"
                         android:background="@drawable/ripple_effect"
-                        android:elevation="5dp"
-                        android:visibility="invisible">
+                        android:elevation="5dp">
 
                         <ImageView
-                            android:id="@+id/dash_img6"
+                            android:id="@+id/dash_img7"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_centerHorizontal="true"
@@ -272,17 +245,19 @@
                             app:tint="@color/purple_700" />
 
                         <TextView
-                            android:id="@+id/dash_tittle6"
+                            android:id="@+id/dash_tittle7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/dash_img6"
+                            android:layout_below="@+id/dash_img7"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins_medium"
                             android:text="@string/settings_txt"
                             android:textColor="@color/purple_500" />
 
+
                     </RelativeLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

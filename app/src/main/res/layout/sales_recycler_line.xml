@@ -19,7 +19,6 @@
         <!-- FrontView Must be at the lower level to be drawn Over the rear views -->
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="20dp"
             android:id="@+id/front_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

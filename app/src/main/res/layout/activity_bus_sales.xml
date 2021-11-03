@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/whitesmoke2"
     android:orientation="vertical"
-    tools:context=".supplier.activities.MyProductsActivity">
+    tools:context=".supplier.activities.BusSalesActivity">
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -38,7 +38,7 @@
             android:padding="10dp">
 
             <ImageView
-                android:onClick="goBackMenu"
+                android:onClick="goBackMendu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -47,6 +47,7 @@
                 app:tint="@color/purple_700" />
 
             <TextView
+                android:textAllCaps="true"
                 android:id="@+id/product_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +55,7 @@
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center_vertical"
-                android:text="@string/add_product_txt"
+                android:text="@string/sales_txt"
                 android:textColor="@color/purple_700"
                 android:textSize="14sp"
                 />
@@ -83,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="@string/enter_product_name_txt"
+                    android:hint="@string/search_here_txt"
                     style="@style/Widget.AppCompat.SearchView"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,13 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <androidx.core.widget.NestedScrollView
 
-            android:layout_weight="1"
-            android:id="@+id/scrollList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
 
             <LinearLayout
                 android:elevation="8dp"
@@ -123,6 +118,7 @@
                     >
 
                     <TextView
+                        android:visibility="invisible"
                         android:padding="16dp"
                         android:textAlignment="textEnd"
                         android:layout_marginBottom="5dp"
@@ -141,7 +137,8 @@
                         android:layout_height="wrap_content"
                         android:text="No products added"/>
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/productsListRecycler"
+                        android:padding="8dp"
+                        android:id="@+id/busSaleListRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>
@@ -152,25 +149,6 @@
             </LinearLayout>
 
 
-        </androidx.core.widget.NestedScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_gravity="end"
-            android:clickable="true"
-            android:onClick="openAddProduct"
-            android:id="@+id/fabaddProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/plus_icon"
-            android:tint="@color/white"
-            app:backgroundTint="@color/purple_500"
-            app:fabSize="normal"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            />
 
     </LinearLayout>
 

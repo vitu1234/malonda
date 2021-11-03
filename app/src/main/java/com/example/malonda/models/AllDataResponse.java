@@ -12,8 +12,10 @@ public class AllDataResponse {
     private List<BusinessInfo>business_info;
     private List<Product>products;
     private List<Unit>units;
+    private List<Sale>sales;
+    private List<ProductSales>product_sales;
 
-    public AllDataResponse(boolean error, String message, List<User> users, List<Category> categories, List<BusinessInfo> business_info, List<Product> products, List<Unit> units) {
+    public AllDataResponse(boolean error, String message, List<User> users, List<Category> categories, List<BusinessInfo> business_info, List<Product> products, List<Unit> units, List<Sale> sales, List<ProductSales> product_sales) {
         this.error = error;
         this.message = message;
         this.users = users;
@@ -21,6 +23,24 @@ public class AllDataResponse {
         this.business_info = business_info;
         this.products = products;
         this.units = units;
+        this.sales = sales;
+        this.product_sales = product_sales;
+    }
+
+    public List<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<Sale> sales) {
+        this.sales = sales;
+    }
+
+    public List<ProductSales> getProduct_sales() {
+        return product_sales;
+    }
+
+    public void setProduct_sales(List<ProductSales> product_sales) {
+        this.product_sales = product_sales;
     }
 
     public boolean isError() {

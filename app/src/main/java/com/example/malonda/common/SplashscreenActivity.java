@@ -20,6 +20,8 @@ import com.example.malonda.models.AllDataResponse;
 import com.example.malonda.models.BusinessInfo;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.Product;
+import com.example.malonda.models.ProductSales;
+import com.example.malonda.models.Sale;
 import com.example.malonda.models.Unit;
 import com.example.malonda.models.User;
 import com.example.malonda.room.AppDatabase;
@@ -48,6 +50,8 @@ public class SplashscreenActivity extends AppCompatActivity {
     private List<BusinessInfo> businessInfoList;
     private List<Product> productList;
     private List<Unit> unitList;
+    private List<Sale> saleList;
+    private List<ProductSales> productSalesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,16 @@ public class SplashscreenActivity extends AppCompatActivity {
                         unitList = response1.getUnits();
                         for (int i = 0; i < unitList.size(); i++) {
                             room_db.unitDao().insertUnit(unitList.get(i));
+                        }
+
+                        saleList = response1.getSales();
+                        for (int i = 0; i < saleList.size(); i++) {
+                            room_db.saleDao().insertSale(saleList.get(i));
+                        }
+
+                        productSalesList = response1.getProduct_sales();
+                        for (int i = 0; i < productSalesList.size(); i++) {
+                            room_db.productSalesDao().insertProductSales(productSalesList.get(i));
                         }
 
                         splashScreen();

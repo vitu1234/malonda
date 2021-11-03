@@ -22,6 +22,8 @@ import com.example.malonda.models.AllDataResponse;
 import com.example.malonda.models.BusinessInfo;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.Product;
+import com.example.malonda.models.ProductSales;
+import com.example.malonda.models.Sale;
 import com.example.malonda.models.Unit;
 import com.example.malonda.models.User;
 import com.example.malonda.room.AppDatabase;
@@ -47,6 +49,8 @@ public class AddEditBusinessInfoActivity extends AppCompatActivity {
     private List<BusinessInfo> businessInfoList;
     private List<Product> productList;
     private List<Unit> unitList;
+    private List<Sale> saleList;
+    private List<ProductSales>productSalesList ;
 
     MyProgressDialog progressDialog;
     AppDatabase room_db;
@@ -135,7 +139,7 @@ public class AddEditBusinessInfoActivity extends AppCompatActivity {
                             if (!response1.isError()) {
                                 room_db.clearAllTables();
 
-                                userList = response1.getUsers();
+                   userList = response1.getUsers();
                                 for (int i = 0; i < userList.size(); i++) {
                                     room_db.userDao().insertUser(userList.get(i));
                                 }
@@ -158,6 +162,16 @@ public class AddEditBusinessInfoActivity extends AppCompatActivity {
                                 unitList = response1.getUnits();
                                 for (int i = 0; i < unitList.size(); i++) {
                                     room_db.unitDao().insertUnit(unitList.get(i));
+                                }
+
+                                saleList = response1.getSales();
+                                for (int i = 0; i < saleList.size(); i++) {
+                                    room_db.saleDao().insertSale(saleList.get(i));
+                                }
+
+                                productSalesList = response1.getProduct_sales();
+                                for (int i = 0; i < productSalesList.size(); i++) {
+                                    room_db.productSalesDao().insertProductSales(productSalesList.get(i));
                                 }
 
                                 new Handler(Looper.getMainLooper()).postDelayed(() -> {
@@ -296,30 +310,40 @@ public class AddEditBusinessInfoActivity extends AppCompatActivity {
                         if (!response1.isError()) {
                             room_db.clearAllTables();
 
-                            userList = response1.getUsers();
-                            for (int i = 0; i < userList.size(); i++) {
-                                room_db.userDao().insertUser(userList.get(i));
-                            }
+                              userList = response1.getUsers();
+                                for (int i = 0; i < userList.size(); i++) {
+                                    room_db.userDao().insertUser(userList.get(i));
+                                }
 
-                            businessInfoList = response1.getBusiness_info();
-                            for (int i = 0; i < businessInfoList.size(); i++) {
-                                room_db.businessInfoDao().insertBusinessInfo(businessInfoList.get(i));
-                            }
+                                businessInfoList = response1.getBusiness_info();
+                                for (int i = 0; i < businessInfoList.size(); i++) {
+                                    room_db.businessInfoDao().insertBusinessInfo(businessInfoList.get(i));
+                                }
 
-                            categoryList = response1.getCategories();
-                            for (int i = 0; i < categoryList.size(); i++) {
-                                room_db.categoryDao().insertCategory(categoryList.get(i));
-                            }
+                                categoryList = response1.getCategories();
+                                for (int i = 0; i < categoryList.size(); i++) {
+                                    room_db.categoryDao().insertCategory(categoryList.get(i));
+                                }
 
-                            productList = response1.getProducts();
-                            for (int i = 0; i < productList.size(); i++) {
-                                room_db.productDao().insertProduct(productList.get(i));
-                            }
+                                productList = response1.getProducts();
+                                for (int i = 0; i < productList.size(); i++) {
+                                    room_db.productDao().insertProduct(productList.get(i));
+                                }
 
-                            unitList = response1.getUnits();
-                            for (int i = 0; i < unitList.size(); i++) {
-                                room_db.unitDao().insertUnit(unitList.get(i));
-                            }
+                                unitList = response1.getUnits();
+                                for (int i = 0; i < unitList.size(); i++) {
+                                    room_db.unitDao().insertUnit(unitList.get(i));
+                                }
+
+                                saleList = response1.getSales();
+                                for (int i = 0; i < saleList.size(); i++) {
+                                    room_db.saleDao().insertSale(saleList.get(i));
+                                }
+
+                                productSalesList = response1.getProduct_sales();
+                                for (int i = 0; i < productSalesList.size(); i++) {
+                                    room_db.productSalesDao().insertProductSales(productSalesList.get(i));
+                                }
 
                             Toastie.allCustom(AddEditBusinessInfoActivity.this)
                                     .setTypeFace(Typeface.DEFAULT_BOLD)

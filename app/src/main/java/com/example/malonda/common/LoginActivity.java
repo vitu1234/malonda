@@ -23,6 +23,8 @@ import com.example.malonda.models.BusinessInfo;
 import com.example.malonda.models.Category;
 import com.example.malonda.models.LoginResponse;
 import com.example.malonda.models.Product;
+import com.example.malonda.models.ProductSales;
+import com.example.malonda.models.Sale;
 import com.example.malonda.models.Unit;
 import com.example.malonda.models.User;
 import com.example.malonda.room.AppDatabase;
@@ -52,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
     private List<BusinessInfo> businessInfoList;
     private List<Product> productList;
     private List<Unit> unitList;
+    private List<Sale> saleList;
+    private List<ProductSales> productSalesList;
 
     private AppDatabase room_db;
 
@@ -103,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
                                 //clear all old data
                                 room_db.clearAllTables();
 
-                                room_db.clearAllTables();
 
                                 userList = response1.getUsers();
                                 for (int i = 0; i < userList.size(); i++) {
@@ -128,6 +131,16 @@ public class LoginActivity extends AppCompatActivity {
                                 unitList = response1.getUnits();
                                 for (int i = 0; i < unitList.size(); i++) {
                                     room_db.unitDao().insertUnit(unitList.get(i));
+                                }
+
+                                saleList = response1.getSales();
+                                for (int i = 0; i < saleList.size(); i++) {
+                                    room_db.saleDao().insertSale(saleList.get(i));
+                                }
+
+                                productSalesList = response1.getProduct_sales();
+                                for (int i = 0; i < productSalesList.size(); i++) {
+                                    room_db.productSalesDao().insertProductSales(productSalesList.get(i));
                                 }
 
 
