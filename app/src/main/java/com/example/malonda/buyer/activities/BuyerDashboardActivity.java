@@ -1,27 +1,25 @@
 package com.example.malonda.buyer.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.malonda.R;
 import com.example.malonda.buyer.Fragments.BuyerDashboardFragment;
-import com.example.malonda.common.SettingsProfileActivity;
 import com.example.malonda.room.AppDatabase;
 import com.example.malonda.storage.SharedPrefManager;
-import com.example.malonda.supplier.activities.SupplierDashboardActivity;
-import com.example.malonda.supplier.fragments.SupplierDashboardFragment;
 
 public class BuyerDashboardActivity extends AppCompatActivity {
     LinearLayout contentView;
     SharedPrefManager sharedPrefManagera;
     BottomNavigationBar bottomNavigationBar;
     AppDatabase room_db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +38,7 @@ public class BuyerDashboardActivity extends AppCompatActivity {
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.home_icon, "Home"))
                 .addItem(new BottomNavigationItem(R.drawable.help_icon, "Help"))
-                .addItem(new BottomNavigationItem(R.drawable.settings_icon, "Settings"))
+//                .addItem(new BottomNavigationItem(R.drawable.settings_icon, "Settings"))
                 .setFirstSelectedPosition(0)
                 .initialise();
 
@@ -51,8 +49,9 @@ public class BuyerDashboardActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.buyer_fragment_container, new BuyerDashboardFragment(), null).commit();
                 } else if (position == 1) {
 //                    displayFragment(new ProductsMainFragment());
+                    Toast.makeText(BuyerDashboardActivity.this, "Not yet implemented", Toast.LENGTH_SHORT).show();
                 } else if (position == 2) {
-                    startActivity(new Intent(BuyerDashboardActivity.this, SettingsProfileActivity.class));
+//                    startActivity(new Intent(BuyerDashboardActivity.this, SettingsProfileActivity.class));
                 } else if (position == 3) {
 //                    startActivity(new Intent(DashboardActivity.this, SettingsActivity.class));
                 } else if (position == 4) {
@@ -84,7 +83,6 @@ public class BuyerDashboardActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.buyer_fragment_container, new BuyerDashboardFragment(), null).commit();
         bottomNavigationBar.selectTab(0);
     }
-
 
 
 }

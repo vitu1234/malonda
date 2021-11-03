@@ -146,6 +146,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         intent.putExtra("restaurant_lat",latitude);
         intent.putExtra("restaurant_lng",longtude);
         intent.putExtra("business",business_name);
+        intent.putExtra("business_id",room_db.businessInfoDao().findByBusinessByUserId(user_id).getBusiness_id());
         Log.e("me", String.valueOf(me_latitude));
         startActivity(intent);
         overridePendingTransition(0,0);

@@ -91,4 +91,5 @@
     <string name="search_here_txt">Search here...</string>
     <string name="sale_details">Sale Details</string>
     <string name="customer_phone_txt">Customer Phone</string>
+    <string name="farmer_sign_in">Farmer Login</string>
 </resources>

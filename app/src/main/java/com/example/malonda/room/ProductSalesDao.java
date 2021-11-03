@@ -15,6 +15,9 @@ public interface ProductSalesDao {
     @Query("SELECT *FROM product_sales")
     List<ProductSales> getAllProductSales();
 
+    @Query("SELECT *FROM product_sales GROUP BY sale_id ORDER BY sale_id Desc LIMIT 4")
+    List<ProductSales> getAllProductSales1();
+
     @Query("SELECT *FROM product_sales WHERE sale_id = :sale_id")
     List<ProductSales> getAllProductSalesBySaleID(int sale_id);
 
