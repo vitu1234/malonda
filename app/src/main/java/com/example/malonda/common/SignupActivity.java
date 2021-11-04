@@ -17,9 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.malonda.R;
 import com.example.malonda.api.RetrofitClient;
+import com.example.malonda.models.AllDataResponse;
 import com.example.malonda.models.BusinessInfo;
 import com.example.malonda.models.Category;
-import com.example.malonda.models.LoginResponse;
 import com.example.malonda.models.Product;
 import com.example.malonda.models.ProductSales;
 import com.example.malonda.models.Sale;
@@ -38,7 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
-    Call<LoginResponse> call;
+    Call<AllDataResponse> call;
     CheckInternet checkInternet;
     TextInputLayout textInputLayoutFname, textInputLayoutLname, textInputLayoutPhone, textPassword;    //dialog
     MyProgressDialog progressDialog;
@@ -153,14 +153,16 @@ public class SignupActivity extends AppCompatActivity {
                 progressDialog.showDialog("Background check...");
                 String password = textPassword.getEditText().getText().toString().trim();
                 String phone = textInputLayoutPhone.getEditText().getText().toString().trim();
-                String fname = textInputLayoutPhone.getEditText().getText().toString().trim();
-                String lname = textInputLayoutPhone.getEditText().getText().toString().trim();
+                String fname = textInputLayoutFname.getEditText().getText().toString().trim();
+                String lname = textInputLayoutLname.getEditText().getText().toString().trim();
 
-                call = RetrofitClient.getInstance().getApi().createUser(fname, lname, phone, password);
-                call.enqueue(new Callback<LoginResponse>() {
+                Log.e("zfzf", password + "___" + phone + "___" + fname + "____" + lname);
+
+                call = RetrofitClient.getInstance().getApi().register(fname, lname, phone, password);
+                call.enqueue(new Callback<AllDataResponse>() {
                     @Override
-                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                        LoginResponse response1 = response.body();
+                    public void onResponse(Call<AllDataResponse> call, Response<AllDataResponse> response) {
+                        AllDataResponse response1 = response.body();
                         progressDialog.closeDialog();
                         if (response1 != null) {
 
@@ -207,7 +209,7 @@ public class SignupActivity extends AppCompatActivity {
 
                                 //save user
                                 new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                    startActivity(new Intent(SignupActivity.this, SplashscreenActivity.class));
+                                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
 
                                     finish();
                                     overridePendingTransition(0, 0);
@@ -250,7 +252,7 @@ public class SignupActivity extends AppCompatActivity {
                                     .setCardElevation(10)
                                     .setIcon(R.drawable.ic_error_black_24dp)
                                     .setCardBackgroundColor(R.color.red)
-                                    .setMessage("No server reposonse!")
+                                    .setMessage("No server response!")
                                     .setGravity(Gravity.BOTTOM, 5, 5)
                                     .createToast(Toast.LENGTH_LONG)
                                     .show();
@@ -258,7 +260,7 @@ public class SignupActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    public void onFailure(Call<AllDataResponse> call, Throwable t) {
                         try {
                             Log.e("error", "Connection problem or " + t.getMessage());
                             progressDialog.closeDialog();

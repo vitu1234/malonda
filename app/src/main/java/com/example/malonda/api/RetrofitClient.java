@@ -4,8 +4,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    public static final String BASE_URL = "http://192.168.8.102/malonda/android/public/";
-    public static final String BASE_URL2 = "http://192.168.8.102/malonda/";//for getting images
+    public static final String BASE_URL = "https://netsoftmw-test.com/malonda/android/public/";
+//    public static final String BASE_URL = "http://192.168.8.102/malonda/android/public/";
+//    public static final String BASE_URL2 = "http://192.168.8.102/malonda/";//for getting images
+    public static final String BASE_URL2 = "https://netsoftmw-test.com/malonda/";//for getting images
     public static RetrofitClient minstance;
     public Retrofit retrofit;
 
