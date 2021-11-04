@@ -232,15 +232,9 @@ public class LoginActivity extends AppCompatActivity {
     public void toSignUp(View view) {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
 
-        //add shared animation
-        Pair[] pairs = new Pair[1];//number of elements to be animated
-        pairs[0] = new Pair<View, String>(view.findViewById(R.id.registerBtn), "toSignUpTransition");
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, pairs);
-            startActivity(intent, options.toBundle());
-        } else {
+
             startActivity(intent);
-        }
+
     }
 
     private boolean validatePassword() {

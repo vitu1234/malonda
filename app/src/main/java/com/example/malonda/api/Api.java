@@ -28,6 +28,16 @@ public interface Api {
             @Field("phone") String email,
             @Field("password") String password
     );
+    //register user
+    @FormUrlEncoded
+    @POST("createuser")
+    //what kind of response? use ResponseBody if you don't know the kind of response that you will get
+    Call<LoginResponse> createUser(
+            @Field("fname") String fname,
+            @Field("lname") String lname,
+            @Field("phone") String phone,
+            @Field("password") String password
+    );
 
     //add product with picture
     @Multipart

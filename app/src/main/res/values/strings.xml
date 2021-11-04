@@ -92,4 +92,5 @@
     <string name="sale_details">Sale Details</string>
     <string name="customer_phone_txt">Customer Phone</string>
     <string name="farmer_sign_in">Farmer Login</string>
+    <string name="finish">Finish</string>
 </resources>
