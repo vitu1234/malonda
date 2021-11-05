@@ -49,7 +49,7 @@ public class BuyerDashboardActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.buyer_fragment_container, new BuyerDashboardFragment(), null).commit();
                 } else if (position == 1) {
 //                    displayFragment(new ProductsMainFragment());
-                    Toast.makeText(BuyerDashboardActivity.this, "Not yet implemented", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BuyerDashboardActivity.this, "Coming soon", Toast.LENGTH_SHORT).show();
                 } else if (position == 2) {
 //                    startActivity(new Intent(BuyerDashboardActivity.this, SettingsProfileActivity.class));
                 } else if (position == 3) {

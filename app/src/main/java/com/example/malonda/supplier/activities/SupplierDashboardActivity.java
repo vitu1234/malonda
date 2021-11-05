@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -50,8 +51,11 @@ public class SupplierDashboardActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SupplierDashboardFragment(), null).commit();
                 } else if (position == 1) {
 //                    displayFragment(new ProductsMainFragment());
+                    Toast.makeText(SupplierDashboardActivity.this, "Coming soon!", Toast.LENGTH_SHORT).show();
+
                 } else if (position == 2) {
                     startActivity(new Intent(SupplierDashboardActivity.this, SettingsProfileActivity.class));
+                    Toast.makeText(SupplierDashboardActivity.this, "Coming soon!", Toast.LENGTH_SHORT).show();
                 } else if (position == 3) {
 //                    startActivity(new Intent(DashboardActivity.this, SettingsActivity.class));
                 } else if (position == 4) {

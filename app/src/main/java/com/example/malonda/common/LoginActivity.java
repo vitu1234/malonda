@@ -192,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                                     .setCardElevation(10)
                                     .setIcon(R.drawable.ic_error_black_24dp)
                                     .setCardBackgroundColor(R.color.red)
-                                    .setMessage("No server reposonse!")
+                                    .setMessage("No server response!")
                                     .setGravity(Gravity.BOTTOM,5,5)
                                     .createToast(Toast.LENGTH_LONG)
                                     .show();
